@@ -1,12 +1,13 @@
 package com.database.dbadmin;
 
+import com.database.dbadmin.models.Employee;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 public class Main extends Application {
 
@@ -15,7 +16,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         stg = stage;
-        openStage("authorization.fxml", stage);
+        openStage("authorization.fxml", stage, 700, 400);
     }
 
     public void changeScene(String fxml){
@@ -27,16 +28,20 @@ public class Main extends Application {
         }
     }
 
-    public void openStage(String fxml, Stage stage) throws IOException{
+    private void openStage(String fxml, Stage stage, int width, int height) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml));
         stage.setTitle("Travel company");
         stage.setResizable(false);
-        stage.setScene(new Scene(fxmlLoader.load(), 700, 400));
+        stage.setScene(new Scene(fxmlLoader.load(), width, height));
         stage.show();
     }
 
     public void openStage(String fxml) throws IOException {
-        openStage(fxml, new Stage());
+        openStage(fxml, new Stage(), 700, 400);
+    }
+
+    public void openStage(String fxml, int width, int height) throws IOException {
+        openStage(fxml, new Stage(), width, height);
     }
 
     public static void main(String[] args){

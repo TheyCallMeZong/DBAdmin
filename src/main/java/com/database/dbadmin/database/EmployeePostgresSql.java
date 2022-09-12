@@ -3,7 +3,6 @@ package com.database.dbadmin.database;
 import com.database.dbadmin.models.Employee;
 import com.database.dbadmin.models.Role;
 import org.jetbrains.annotations.NotNull;
-
 import java.lang.reflect.Field;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -13,7 +12,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class EmployeePostgresSql {
-
     private final PostgresSqlConnect postgresSqlConnect;
 
     private EmployeePostgresSql() {
@@ -26,8 +24,8 @@ public class EmployeePostgresSql {
         return instance == null ? new EmployeePostgresSql() : instance;
     }
 
-    public void writeToDb(@NotNull Employee employee) throws NoSuchAlgorithmException {
-        String query = "INSERT INTO employee(login, password, name, email, phonenumber, age, role_id) " +
+    public void writeToDb(@NotNull Employee employee) {
+        String query = "INSERT INTO employee(login, password, name, email, \"phoneNumber\", age, role_id) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = postgresSqlConnect.connection.prepareStatement(query)) {
@@ -44,10 +42,12 @@ public class EmployeePostgresSql {
             System.out.println("Successfully created");
         } catch (SQLException e) {
             System.err.println("Error in writeToDb");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public List<Employee> readEmployeeFromDb(){
+    public List<Employee> readFromDb() {
         String query = "SELECT * FROM employee";
 
         List<Employee> employeeList = new ArrayList<>();
@@ -68,7 +68,7 @@ public class EmployeePostgresSql {
         return employeeList;
     }
 
-    public void deleteEmployee(long id) {
+    public void delete(long id) {
         String query = "DELETE FROM employee WHERE id=?";
         try(PreparedStatement preparedStatement = postgresSqlConnect.connection.prepareStatement(query)){
             preparedStatement.setLong(1, id);
@@ -78,7 +78,7 @@ public class EmployeePostgresSql {
         }
     }
 
-    public Employee getEmployee(String login, String password) {
+    public Employee getEmployeeFromDb(String login, String password) {
         Employee employee = null;
         String query = "SELECT * FROM employee WHERE login=? AND password=?";
         try (PreparedStatement preparedStatement = postgresSqlConnect.connection.prepareStatement(query)) {
@@ -96,6 +96,31 @@ public class EmployeePostgresSql {
             throw new RuntimeException(e);
         }
         return employee;
+    }
+
+    public void updateEmployee(Employee employee, boolean flag){
+        String query = "UPDATE employee SET login=?, password=?, name=?, email=?, \"phoneNumber\"=?, age=? WHERE ID=?";
+        try(PreparedStatement preparedStatement = postgresSqlConnect.connection.prepareStatement(query)){
+            String password;
+            if (flag){
+                password = employee.getPassword();
+            } else {
+                password = getPasswordHash(employee.getPassword());
+            }
+            preparedStatement.setString(1, employee.getLogin());
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, employee.getName());
+            preparedStatement.setString(4, employee.getEmail());
+            preparedStatement.setString(5, employee.getPhoneNumber());
+            preparedStatement.setInt(6, employee.getAge());
+            preparedStatement.setLong(7, employee.getId());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("error in update");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private String getPasswordHash(@NotNull String str) throws NoSuchAlgorithmException {

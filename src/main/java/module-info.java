@@ -12,4 +12,8 @@ module com.database.dbadmin {
     opens com.database.dbadmin.database to javafx.fxml;
     exports com.database.dbadmin.controllers;
     opens com.database.dbadmin.controllers to javafx.fxml;
+    exports com.database.dbadmin.dao;
+    opens com.database.dbadmin.dao to javafx.fxml;
+    exports com.database.dbadmin.models;
+    opens com.database.dbadmin.models to javafx.fxml;
 }

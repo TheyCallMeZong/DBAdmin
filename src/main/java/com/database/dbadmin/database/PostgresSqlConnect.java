@@ -2,10 +2,7 @@ package com.database.dbadmin.database;
 
 import java.sql.*;
 
-public class PostgresSqlConnect {
-    private final String url = "jdbc:postgresql://localhost:5432/postgres";
-    private final String user = "postgres";
-    private final String password = "1012";
+public class PostgresSqlConnect extends Config{
     final Connection connection;
 
     {

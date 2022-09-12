@@ -1,14 +1,25 @@
 package com.database.dbadmin.controllers;
 
-import com.database.dbadmin.database.EmployeePostgresSql;
+import com.database.dbadmin.dao.EmployeeDao;
 import com.database.dbadmin.models.Employee;
 import com.database.dbadmin.models.Role;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
-import java.security.NoSuchAlgorithmException;
+import javafx.scene.paint.Color;
 
 public class EmployeeController {
+    @FXML
+    public TextField name;
+    @FXML
+    public TextField email;
+    @FXML
+    public TextField phoneNumber;
+    @FXML
+    public TextField age;
+    @FXML
+    public TextField login;
+    @FXML
+    public PasswordField password;
     @FXML
     public TextField employeeName;
 
@@ -28,18 +39,34 @@ public class EmployeeController {
     public PasswordField employeePassword;
 
     @FXML
-    public Button btn;
+    private Label wrongData;
 
-    public void addEmployeeToDb() throws NoSuchAlgorithmException {
-        EmployeePostgresSql employeePostgresSql = EmployeePostgresSql.getInstance();
-        Employee employee = new Employee();
-        employee.setName(employeeName.getText());
-        employee.setEmail(employeeEmail.getText());
-        employee.setPassword(employeePassword.getText());
-        employee.setLogin(employeeLogin.getText());
-        employee.setAge(Integer.parseInt(employeeAge.getText()));
-        employee.setPhoneNumber(employeePhoneNumber.getText());
-        employee.setRole_id(Role.USER);
-        employeePostgresSql.writeToDb(employee);
+    private EmployeeDao employeeDao;
+
+    @FXML
+    void initialize() {
+        employeeDao = new EmployeeDao();
+    }
+
+    public void addEmployeeToDb() {
+        try {
+            Employee employee = new Employee(employeeLogin.getText().trim(), employeePassword.getText().trim(),
+                    employeeName.getText(), employeeEmail.getText(),
+                    Integer.parseInt(employeeAge.getText().trim()), employeePhoneNumber.getText());
+            employee.setRole_id(Role.USER);
+            if (employeeDao.addEmployee(employee)){
+                wrongData.setText("Good");
+                wrongData.setTextFill(Color.GREEN);
+            } else {
+                incorrectData();
+            }
+        } catch (NumberFormatException exception){
+            incorrectData();
+        }
+    }
+
+    private void incorrectData(){
+        wrongData.setText("Incorrect data");
+        wrongData.setTextFill(Color.RED);
     }
 }
