@@ -52,9 +52,17 @@ public class EmployeeShowController {
     @FXML
     void initialize() {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        id.setMaxWidth(40);
+        id.setMinWidth(40);
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        name.setMaxWidth(140);
+        name.setMinWidth(140);
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
+        email.setMaxWidth(150);
+        email.setMinWidth(150);
         phoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        phoneNumber.setMaxWidth(179);
+        phoneNumber.setMinWidth(179);
         table.setEditable(true);
         observableList = FXCollections.observableList(employeeDao.getAllEmployee());
         addDeleteButtonToTable();
@@ -92,7 +100,8 @@ public class EmployeeShowController {
                 return cell;
             }
         };
-
+        edit.setMaxWidth(70);
+        edit.setMinWidth(70);
         edit.setCellFactory(cellFactory);
     }
 
@@ -125,7 +134,8 @@ public class EmployeeShowController {
                 return cell;
             }
         };
-
+        delete.setMinWidth(90);
+        delete.setMaxWidth(90);
         delete.setCellFactory(cellFactory);
     }
 

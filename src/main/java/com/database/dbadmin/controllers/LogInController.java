@@ -2,7 +2,8 @@ package com.database.dbadmin.controllers;
 
 import com.database.dbadmin.Main;
 import com.database.dbadmin.dao.EmployeeDao;
-import com.database.dbadmin.database.EmployeePostgresSql;
+import com.database.dbadmin.models.Employee;
+import com.database.dbadmin.models.Role;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,12 +26,17 @@ public class LogInController {
 
     public void logIn() {
         EmployeeDao employeeDao = new EmployeeDao();
+        Employee employee;
         if (userLogin.getText().isEmpty() || password.getText().isEmpty()){
             wrongData.setText("Incorrect data");
             wrongData.setTextFill(Color.RED);
-        } else if (employeeDao.getEmployee(userLogin.getText(), password.getText()) != null){
+        } else if ((employee = employeeDao.getEmployee(userLogin.getText(), password.getText())) != null){
             Main main = new Main();
-            main.changeScene("main.fxml");
+            if (employee.getRole_id() == Role.ADMIN) {
+                main.changeScene("main.fxml");
+            } else {
+                main.changeScene("employeeWorkSpace.fxml");
+            }
         } else {
             wrongData.setText("User not found. Check login and password");
             wrongData.setTextFill(Color.RED);

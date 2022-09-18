@@ -8,15 +8,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.database.dbadmin.controllers.MainController">
+<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.database.dbadmin.controllers.MainController">
    <children>
-      <AnchorPane prefHeight="400.0" prefWidth="90.0" style="-fx-background-color: #191970;"
-                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="610.0"
-                  AnchorPane.topAnchor="0.0">
+      <AnchorPane prefHeight="400.0" prefWidth="90.0" style="-fx-background-color: #191970;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="610.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="addUser" layoutX="12.0" layoutY="37.0" mnemonicParsing="false" onAction="#addUser"
-                    prefHeight="50.0" prefWidth="50.0">
+            <Button fx:id="addUser" layoutX="12.0" layoutY="37.0" mnemonicParsing="false" onAction="#addUser" prefHeight="50.0" prefWidth="50.0">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -25,22 +21,11 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="allUsers" layoutX="11.0" layoutY="171.0" mnemonicParsing="false" onAction="#getAllUsers"
-                    prefHeight="50.0" prefWidth="50.0">
+            <Button fx:id="allUsers" layoutX="11.0" layoutY="171.0" mnemonicParsing="false" onAction="#getAllUsers" prefHeight="50.0" prefWidth="50.0">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@img/allUsers.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="admin" layoutX="12.0" layoutY="310.0" mnemonicParsing="false" onAction="#openProfile"
-                    prefHeight="50.0" prefWidth="50.0">
-               <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/admin.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -50,40 +35,29 @@
                   <Font name="Toppan Bunkyu Mincho Regular" size="10.0" />
                </font>
             </Label>
-            <Label layoutX="12.0" layoutY="238.0" prefHeight="17.0" prefWidth="66.0" style="-fx-text-fill: #b0c8e2;"
-                   text="All Employee">
+            <Label layoutX="12.0" layoutY="238.0" prefHeight="17.0" prefWidth="66.0" style="-fx-text-fill: #b0c8e2;" text="All Employee">
                <font>
                   <Font size="12.0" />
                </font>
             </Label>
-            <Label layoutX="12.0" layoutY="379.0" prefHeight="17.0" prefWidth="66.0" style="-fx-text-fill: #b0c8e2;"
-                   text="Profile" />
          </children>
       </AnchorPane>
-      <Text layoutX="285.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME!"
-            wrappingWidth="182.31898498535156" AnchorPane.bottomAnchor="356.2800006866455"
-            AnchorPane.leftAnchor="285.0" AnchorPane.rightAnchor="232.68101501464844"
-            AnchorPane.topAnchor="13.719999313354492">
+      <Text layoutX="285.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME!" wrappingWidth="182.31898498535156" AnchorPane.bottomAnchor="356.2800006866455" AnchorPane.leftAnchor="285.0" AnchorPane.rightAnchor="232.68101501464844" AnchorPane.topAnchor="13.719999313354492">
          <font>
             <Font name="Toppan Bunkyu Mincho Regular" size="31.0" />
          </font>
       </Text>
-      <ImageView fitHeight="74.0" fitWidth="74.0" layoutX="615.0" layoutY="6.0" AnchorPane.leftAnchor="612.0"
-                 AnchorPane.topAnchor="11.0">
+      <ImageView fitHeight="74.0" fitWidth="74.0" layoutX="615.0" layoutY="6.0" AnchorPane.leftAnchor="612.0" AnchorPane.topAnchor="11.0">
          <image>
             <Image url="@img/airplane.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="logout" contentDisplay="CENTER" layoutX="591.0" layoutY="344.0" mnemonicParsing="false"
-              onAction="#logout" prefHeight="44.0" prefWidth="90.0" style="-fx-background-color: #a1bbe6;"
-              text="Log out">
+      <Button fx:id="logout" contentDisplay="CENTER" layoutX="591.0" layoutY="344.0" mnemonicParsing="false" onAction="#logout" prefHeight="44.0" prefWidth="90.0" style="-fx-background-color: #a1bbe6;" text="Log out">
          <font>
             <Font name="Toppan Bunkyu Mincho Regular" size="16.0" />
          </font>
       </Button>
-      <Text layoutX="99.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0"
-            text="The project was created by Semyon Savchenko, student of NSTU, group AP-026"
-            wrappingWidth="248.0234375">
+      <Text layoutX="99.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The project was created by Semyon Savchenko, student of NSTU, group AP-026" wrappingWidth="248.0234375">
          <font>
             <Font size="24.0" />
          </font>

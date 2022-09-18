@@ -1,8 +1,6 @@
 package com.database.dbadmin.controllers;
 
 import com.database.dbadmin.Main;
-import com.database.dbadmin.dao.EmployeeDao;
-import com.database.dbadmin.database.PostgresSqlConnect;
 import javafx.event.ActionEvent;
 
 import java.io.IOException;
@@ -24,9 +22,5 @@ public class MainController {
 
     public void getAllUsers() throws IOException{
         main.openStage("allEmployee.fxml");
-    }
-
-    public void openProfile(){
-
     }
 }

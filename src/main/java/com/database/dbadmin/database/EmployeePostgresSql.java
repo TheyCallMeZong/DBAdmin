@@ -26,7 +26,7 @@ public class EmployeePostgresSql {
 
     public void writeToDb(@NotNull Employee employee) {
         String query = "INSERT INTO employee(login, password, name, email, \"phoneNumber\", age, role_id) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?)";
+                "VALUES(?, ?, ?, ?, ?, ?, (SELECT role.role_id FROM role WHERE role_name=?))";
 
         try (PreparedStatement preparedStatement = postgresSqlConnect.connection.prepareStatement(query)) {
 
@@ -36,7 +36,7 @@ public class EmployeePostgresSql {
             preparedStatement.setString(4, employee.getEmail());
             preparedStatement.setString(5, employee.getPhoneNumber());
             preparedStatement.setInt(6, employee.getAge());
-            preparedStatement.setInt(7, employee.getRole_id().getValue());
+            preparedStatement.setString(7, employee.getRole_id().toString());
             preparedStatement.executeUpdate();
 
             System.out.println("Successfully created");

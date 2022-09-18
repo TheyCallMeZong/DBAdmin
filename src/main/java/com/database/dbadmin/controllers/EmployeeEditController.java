@@ -1,7 +1,6 @@
 package com.database.dbadmin.controllers;
 
 import com.database.dbadmin.dao.EmployeeDao;
-import com.database.dbadmin.database.EmployeePostgresSql;
 import com.database.dbadmin.models.Employee;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
