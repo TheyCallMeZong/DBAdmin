@@ -21,7 +21,7 @@ public class TripDao {
         return tripPostgresSql.getCities(country);
     }
 
-    public Set<Hotel> getHotels(City city){
+    public Set<Hotel> getHotels(String city){
         return tripPostgresSql.getHotels(city);
     }
 }

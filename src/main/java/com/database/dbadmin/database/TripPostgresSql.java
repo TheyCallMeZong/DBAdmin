@@ -41,7 +41,7 @@ public class TripPostgresSql {
     }
 
     public Set<City> getCities(String country){
-        String query = "SELECT city_name FROM cities LEFT JOIN countries c on c.country=?";
+        String query = "SELECT * FROM cities c INNER JOIN countries c2 ON c2.country=? AND c.country_id = c2.country_id";
         Set<City> cities = new HashSet<>();
         try (PreparedStatement preparedStatement = connect.connection.prepareStatement(query)){
             preparedStatement.setString(1, country);
@@ -57,13 +57,12 @@ public class TripPostgresSql {
         return null;
     }
 
-    public Set<Hotel> getHotels(City city){
-        String query = "SELECT hotel_name, hotel_class FROM hotels " +
-                "LEFT JOIN cities c ON city_name=? AND c.country_id=?";
+    public Set<Hotel> getHotels(String city){
+        String query = "SELECT hotel_name, hotel_class FROM hotels h " +
+                "INNER JOIN cities c ON c.city_name=? AND c.city_id=h.city_id ";
         Set<Hotel> hotels = new HashSet<>();
         try (PreparedStatement preparedStatement = connect.connection.prepareStatement(query)){
-            preparedStatement.setString(1, city.getName());
-            preparedStatement.setLong(2, city.getCountry().getId());
+            preparedStatement.setString(1, city);
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 hotels.add(new Hotel(resultSet.getString("hotel_name"),
