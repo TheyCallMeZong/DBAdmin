@@ -24,4 +24,10 @@ public class RoutePoint {
         this.city = city;
         this.country = country;
     }
+
+    @Override
+    public String toString(){
+        return "city name - '" + getCity().getName() + "' hotel name '" + getHotel().getName() + "' hotel class '" + getHotel().getHotelClass() + "*' arrival date -'" + getArrivalDate().toString() +
+                "' departure date - '" + getDepartureDate().toString() + "'";
+    }
 }

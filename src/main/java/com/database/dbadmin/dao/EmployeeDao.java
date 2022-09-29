@@ -2,7 +2,10 @@ package com.database.dbadmin.dao;
 
 import com.database.dbadmin.database.EmployeePostgresSql;
 import com.database.dbadmin.models.Employee;
+import com.database.dbadmin.models.Role;
+
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class EmployeeDao {
@@ -53,5 +56,9 @@ public class EmployeeDao {
             return false;
         }
         return true;
+    }
+
+    public Set<String> getRoles(){
+        return postgresSqlConnect.getRoles();
     }
 }

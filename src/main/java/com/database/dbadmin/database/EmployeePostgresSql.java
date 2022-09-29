@@ -7,9 +7,7 @@ import java.lang.reflect.Field;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class EmployeePostgresSql {
     private final PostgresSqlConnect postgresSqlConnect;
@@ -148,6 +146,21 @@ public class EmployeePostgresSql {
             field.set(employee, object);
         }
         return employee;
+    }
+
+    public Set<String> getRoles(){
+        String query = "SELECT role_name FROM role";
+        Set<String> roles = new HashSet<>();
+        try(PreparedStatement preparedStatement = postgresSqlConnect.connection.prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                roles.add(resultSet.getString("role_name"));
+            }
+            return roles;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
     private Role getRole(int id){

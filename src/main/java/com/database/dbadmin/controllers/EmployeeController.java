@@ -3,9 +3,13 @@ package com.database.dbadmin.controllers;
 import com.database.dbadmin.dao.EmployeeDao;
 import com.database.dbadmin.models.Employee;
 import com.database.dbadmin.models.Role;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
+
+import java.util.Set;
 
 public class EmployeeController {
     @FXML
@@ -44,8 +48,16 @@ public class EmployeeController {
     private EmployeeDao employeeDao;
 
     @FXML
+    private ComboBox<String> roleComboBox;
+
+    private ObservableList<String> roles;
+
+    @FXML
     void initialize() {
         employeeDao = new EmployeeDao();
+        Set<String> roleSet = employeeDao.getRoles();
+        roles = FXCollections.observableArrayList(roleSet);
+        roleComboBox.setItems(roles);
     }
 
     public void addEmployeeToDb() {
@@ -53,7 +65,11 @@ public class EmployeeController {
             Employee employee = new Employee(employeeLogin.getText().trim(), employeePassword.getText().trim(),
                     employeeName.getText(), employeeEmail.getText(),
                     Integer.parseInt(employeeAge.getText().trim()), employeePhoneNumber.getText());
-            employee.setRole_id(Role.USER);
+            try{
+                employee.setRole_id(roleComboBox.getValue());
+            } catch (NullPointerException ex) {
+                employee.setRole_id(Role.USER);
+            }
             if (employeeDao.addEmployee(employee)){
                 wrongData.setText("Good");
                 wrongData.setTextFill(Color.GREEN);

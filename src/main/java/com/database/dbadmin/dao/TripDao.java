@@ -40,4 +40,8 @@ public class TripDao {
     public Set<Room> getHotelInformation(Hotel hotel){
         return tripPostgresSql.getHotelInformation(hotel);
     }
+
+    public boolean createTrip(){
+        return tripPostgresSql.createTrip();
+    }
 }

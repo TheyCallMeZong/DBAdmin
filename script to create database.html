@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px Courier; color: #bf6426; background-color: #202020}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px Courier; color: #99a8ba; background-color: #202020}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px Courier; color: #bf6426; background-color: #202020; min-height: 16.0px}
+    span.s1 {color: #99a8ba}
+    span.s2 {color: #587647}
+    span.s3 {color: #bf6426}
+    span.s4 {color: #5684ad}
+  </style>
+</head>
+<body>
+<p class="p1">create table role</p>
+<p class="p2">(</p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>role_id <span class="Apple-converted-space">  </span></span>numeric default <span class="s1">nextval(</span><span class="s2">'role_role_id_seq'</span><span class="s1">::</span>regclass<span class="s1">) </span>not null</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constraint <span class="s1">role_pk</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span></span>primary key,</p>
+<p class="p2"><span class="s3"><span class="Apple-converted-space">    </span></span>role_name <span class="s3">varchar</span>(<span class="s4">30</span>) <span class="Apple-converted-space">                                          </span><span class="s3">not null</span></p>
+<p class="p1"><span class="s1">)</span>;</p>
+<p class="p3"><br></p>
+<p class="p1">alter table role</p>
+<p class="p1"><span class="Apple-converted-space">    </span>owner to <span class="s1">postgres</span>;</p>
+<p class="p3"><br></p>
+<p class="p1">create table <span class="s1">employee</span></p>
+<p class="p2">(</p>
+<p class="p2"><span class="Apple-converted-space">    </span>id<span class="Apple-converted-space">            </span><span class="s3">bigserial</span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>constraint <span class="s1">employee_pk</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span></span>primary key,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>login <span class="Apple-converted-space">        </span>varchar<span class="s1">(</span><span class="s4">30</span><span class="s1">)<span class="Apple-converted-space">  </span></span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>password<span class="Apple-converted-space">      </span>varchar<span class="s1">(</span><span class="s4">255</span><span class="s1">) </span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>name<span class="Apple-converted-space">          </span>varchar<span class="s1">(</span><span class="s4">50</span><span class="s1">)<span class="Apple-converted-space">  </span></span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">email <span class="Apple-converted-space">        </span></span>varchar<span class="s1">(</span><span class="s4">50</span><span class="s1">)<span class="Apple-converted-space">  </span></span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">"phoneNumber" </span>varchar<span class="s1">(</span><span class="s4">50</span><span class="s1">)<span class="Apple-converted-space">  </span></span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">age <span class="Apple-converted-space">          </span></span>integer<span class="Apple-converted-space">      </span>not null,</p>
+<p class="p2"><span class="s3"><span class="Apple-converted-space">    </span></span>role_id <span class="Apple-converted-space">      </span><span class="s3">numeric</span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>constraint <span class="s1">role_id</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span></span>references role</p>
+<p class="p1"><span class="s1">)</span>;</p>
+<p class="p3"><br></p>
+<p class="p1">alter table <span class="s1">employee</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s3">owner to </span>postgres<span class="s3">;</span></p>
+<p class="p3"><br></p>
+<p class="p1">create unique index <span class="s1">employee_id_uindex</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s3">on </span>employee (id)<span class="s3">;</span></p>
+<p class="p3"><br></p>
+<p class="p1">create table <span class="s1">countries</span></p>
+<p class="p2">(</p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>country_id </span>numeric default <span class="s1">nextval(</span><span class="s2">'countries_id_seq'</span><span class="s1">::</span>regclass<span class="s1">) </span>not null</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constraint <span class="s1">country_id</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span></span>primary key,</p>
+<p class="p2"><span class="s3"><span class="Apple-converted-space">    </span></span>country<span class="Apple-converted-space">    </span><span class="s3">varchar</span>(<span class="s4">30</span>) <span class="Apple-converted-space">                                          </span><span class="s3">not null</span></p>
+<p class="p1"><span class="s1">)</span>;</p>
+<p class="p3"><br></p>
+<p class="p1">alter table <span class="s1">countries</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s3">owner to </span>postgres<span class="s3">;</span></p>
+<p class="p3"><br></p>
+<p class="p1">create unique index <span class="s1">name_country</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s3">on </span>countries (country)<span class="s3">;</span></p>
+<p class="p3"><br></p>
+<p class="p1">create table <span class="s1">clients</span></p>
+<p class="p2">(</p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>client_id <span class="Apple-converted-space">      </span></span>numeric default <span class="s1">nextval(</span><span class="s2">'clients_client_id_seq'</span><span class="s1">::</span>regclass<span class="s1">) </span>not null</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constraint <span class="s1">client_id</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span></span>primary key,</p>
+<p class="p2"><span class="s3"><span class="Apple-converted-space">    </span>name<span class="Apple-converted-space">            </span>varchar</span>(<span class="s4">30</span>)<span class="Apple-converted-space">                                                </span><span class="s3">not null,</span></p>
+<p class="p2"><span class="s3"><span class="Apple-converted-space">    </span></span>surname <span class="Apple-converted-space">        </span><span class="s3">varchar</span>(<span class="s4">30</span>)<span class="Apple-converted-space">                                                </span><span class="s3">not null,</span></p>
+<p class="p2"><span class="s3"><span class="Apple-converted-space">    </span></span>patronymic<span class="Apple-converted-space">      </span><span class="s3">varchar</span>(<span class="s4">30</span>)<span class="s3">,</span></p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">birth <span class="Apple-converted-space">          </span></span>date <span class="Apple-converted-space">                                                      </span>not null,</p>
+<p class="p2"><span class="s3"><span class="Apple-converted-space">    </span></span>passport_series <span class="s3">varchar</span>(<span class="s4">10</span>)<span class="Apple-converted-space">                                                </span><span class="s3">not null,</span></p>
+<p class="p2"><span class="s3"><span class="Apple-converted-space">    </span></span>passport_number <span class="s3">varchar</span>(<span class="s4">10</span>)<span class="Apple-converted-space">                                                </span><span class="s3">not null,</span></p>
+<p class="p2"><span class="s3"><span class="Apple-converted-space">    </span></span>passport_issued <span class="s3">varchar</span>(<span class="s4">40</span>)<span class="Apple-converted-space">                                                </span><span class="s3">not null,</span></p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">date_issue<span class="Apple-converted-space">      </span></span>date <span class="Apple-converted-space">                                                      </span>not null,</p>
+<p class="p2"><span class="s3"><span class="Apple-converted-space">    </span></span>photo <span class="Apple-converted-space">          </span><span class="s3">varchar</span>(<span class="s4">50</span>)<span class="Apple-converted-space">                                                </span><span class="s3">not null</span></p>
+<p class="p1"><span class="s1">)</span>;</p>
+<p class="p3"><br></p>
+<p class="p1">alter table <span class="s1">clients</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s3">owner to </span>postgres<span class="s3">;</span></p>
+<p class="p3"><br></p>
+<p class="p1">create table <span class="s1">"group"</span></p>
+<p class="p2">(</p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>group_id </span>numeric default <span class="s1">nextval(</span><span class="s2">'group_group_id_seq'</span><span class="s1">::</span>regclass<span class="s1">) </span>not null</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constraint <span class="s1">group_id</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span></span>primary key,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">"group"<span class="Apple-converted-space">  </span></span>integer <span class="Apple-converted-space">                                                </span>not null</p>
+<p class="p1"><span class="s1">)</span>;</p>
+<p class="p3"><br></p>
+<p class="p1">alter table <span class="s1">"group"</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s3">owner to </span>postgres<span class="s3">;</span></p>
+<p class="p3"><br></p>
+<p class="p1">create table <span class="s1">route</span></p>
+<p class="p2">(</p>
+<p class="p2"><span class="Apple-converted-space">    </span>route_name <span class="s3">varchar</span>(<span class="s4">30</span>) <span class="Apple-converted-space">                                            </span><span class="s3">not null,</span></p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">route_id <span class="Apple-converted-space">  </span></span>numeric default <span class="s1">nextval(</span><span class="s2">'route_route_id_seq'</span><span class="s1">::</span>regclass<span class="s1">) </span>not null</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constraint <span class="s1">route_id</span></p>
+<p class="p2"><span class="Apple-converted-space">            </span><span class="s3">primary key</span></p>
+<p class="p1"><span class="s1">)</span>;</p>
+<p class="p3"><br></p>
+<p class="p1">alter table <span class="s1">route</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s3">owner to </span>postgres<span class="s3">;</span></p>
+<p class="p3"><br></p>
+<p class="p1">create table <span class="s1">trip</span></p>
+<p class="p2">(</p>
+<p class="p2"><span class="Apple-converted-space">    </span>trip_id<span class="Apple-converted-space">        </span><span class="s3">serial</span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>constraint <span class="s1">trip_id</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span></span>primary key,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">employee_id<span class="Apple-converted-space">    </span></span>integer<span class="Apple-converted-space">        </span>not null</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constraint <span class="s1">employee_id</span></p>
+<p class="p2"><span class="Apple-converted-space">            </span><span class="s3">references </span>employee<span class="s3">,</span></p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">group_id <span class="Apple-converted-space">      </span></span>numeric<span class="Apple-converted-space">        </span>not null</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constraint <span class="s1">group_id</span></p>
+<p class="p2"><span class="Apple-converted-space">            </span><span class="s3">references </span>"group"<span class="s3">,</span></p>
+<p class="p2"><span class="s3"><span class="Apple-converted-space">    </span></span>penalty<span class="Apple-converted-space">        </span><span class="s3">numeric</span>(<span class="s4">8</span><span class="s3">, </span><span class="s4">2</span>)<span class="s3">,</span></p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">departure_date </span>date <span class="Apple-converted-space">          </span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">arrival_date <span class="Apple-converted-space">  </span></span>date <span class="Apple-converted-space">          </span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">route_id <span class="Apple-converted-space">      </span></span>numeric<span class="Apple-converted-space">        </span>not null</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constraint <span class="s1">route_id</span></p>
+<p class="p2"><span class="Apple-converted-space">            </span><span class="s3">references </span>route<span class="s3">,</span></p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">sum<span class="Apple-converted-space">            </span></span>numeric<span class="s1">(</span><span class="s4">10</span>, <span class="s4">2</span><span class="s1">) </span>not null</p>
+<p class="p1"><span class="s1">)</span>;</p>
+<p class="p3"><br></p>
+<p class="p1">alter table <span class="s1">trip</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s3">owner to </span>postgres<span class="s3">;</span></p>
+<p class="p3"><br></p>
+<p class="p1">create table <span class="s1">client_group</span></p>
+<p class="p2">(</p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>client_id </span>numeric not null</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constraint <span class="s1">client_id</span></p>
+<p class="p2"><span class="Apple-converted-space">            </span><span class="s3">references </span>clients<span class="s3">,</span></p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">group_id<span class="Apple-converted-space">  </span></span>numeric not null</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constraint <span class="s1">group_id</span></p>
+<p class="p2"><span class="Apple-converted-space">            </span><span class="s3">references </span>"group"</p>
+<p class="p1"><span class="s1">)</span>;</p>
+<p class="p3"><br></p>
+<p class="p2"><span class="s3">alter table </span>client_group</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s3">owner to </span>postgres<span class="s3">;</span></p>
+<p class="p3"><br></p>
+<p class="p1">create table <span class="s1">cities</span></p>
+<p class="p2">(</p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>city_id<span class="Apple-converted-space">    </span></span>numeric <span class="Apple-converted-space">    </span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">city_name<span class="Apple-converted-space">  </span></span>varchar<span class="s1">(</span><span class="s4">50</span><span class="s1">) </span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">country_id </span>numeric <span class="Apple-converted-space">    </span>not null</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constraint <span class="s1">country_id</span></p>
+<p class="p2"><span class="Apple-converted-space">            </span><span class="s3">references </span>countries<span class="s3">,</span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>constraint <span class="s1">city_id</span></p>
+<p class="p2"><span class="Apple-converted-space">        </span><span class="s3">primary key </span>(city_id<span class="s3">, </span>country_id)</p>
+<p class="p1"><span class="s1">)</span>;</p>
+<p class="p3"><br></p>
+<p class="p1">alter table <span class="s1">cities</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s3">owner to </span>postgres<span class="s3">;</span></p>
+<p class="p3"><br></p>
+<p class="p1">create table <span class="s1">hotels</span></p>
+<p class="p2">(</p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>hotel_id<span class="Apple-converted-space">    </span></span>numeric <span class="Apple-converted-space">    </span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">hotel_class </span>smallint<span class="Apple-converted-space">    </span>not null</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constraint <span class="s1">hotel_class_check</span></p>
+<p class="p2"><span class="Apple-converted-space">            </span><span class="s3">check </span>((hotel_class &gt; <span class="s4">0</span>) <span class="s3">AND </span>(hotel_class &lt; <span class="s4">6</span>))<span class="s3">,</span></p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">hotel_name<span class="Apple-converted-space">  </span></span>varchar<span class="s1">(</span><span class="s4">50</span><span class="s1">) </span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">city_id <span class="Apple-converted-space">    </span></span>numeric <span class="Apple-converted-space">    </span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">country_id<span class="Apple-converted-space">  </span></span>numeric <span class="Apple-converted-space">    </span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>constraint <span class="s1">hotel_id</span></p>
+<p class="p2"><span class="Apple-converted-space">        </span><span class="s3">primary key </span>(country_id<span class="s3">, </span>city_id<span class="s3">, </span>hotel_id)<span class="s3">,</span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>constraint <span class="s1">city_id</span></p>
+<p class="p2"><span class="Apple-converted-space">        </span><span class="s3">foreign key </span>(city_id<span class="s3">, </span>country_id) <span class="s3">references </span>cities</p>
+<p class="p1"><span class="s1">)</span>;</p>
+<p class="p3"><br></p>
+<p class="p1">alter table <span class="s1">hotels</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s3">owner to </span>postgres<span class="s3">;</span></p>
+<p class="p3"><br></p>
+<p class="p1">create table <span class="s1">route_points</span></p>
+<p class="p2">(</p>
+<p class="p2"><span class="Apple-converted-space">    </span>route_points_id <span class="s3">serial</span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>constraint <span class="s1">route_points_id</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span></span>primary key,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">arrival_date<span class="Apple-converted-space">    </span></span>date<span class="Apple-converted-space">    </span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">departure_date<span class="Apple-converted-space">  </span></span>date<span class="Apple-converted-space">    </span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">route_id<span class="Apple-converted-space">        </span></span>numeric not null</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constraint <span class="s1">route_id</span></p>
+<p class="p2"><span class="Apple-converted-space">            </span><span class="s3">references </span>route<span class="s3">,</span></p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">hotel_id<span class="Apple-converted-space">        </span></span>numeric not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">city_id <span class="Apple-converted-space">        </span></span>numeric not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">country_id<span class="Apple-converted-space">      </span></span>numeric not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>constraint <span class="s1">hotel_id</span></p>
+<p class="p2"><span class="Apple-converted-space">        </span><span class="s3">foreign key </span>(hotel_id<span class="s3">, </span>city_id<span class="s3">, </span>country_id) <span class="s3">references </span>hotels (hotel_id<span class="s3">, </span>city_id<span class="s3">, </span>country_id)<span class="s3">,</span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>constraint <span class="s1">check_name</span></p>
+<p class="p2"><span class="Apple-converted-space">        </span><span class="s3">check </span>(departure_date &gt; arrival_date)</p>
+<p class="p1"><span class="s1">)</span>;</p>
+<p class="p3"><br></p>
+<p class="p2"><span class="s3">alter table </span>route_points</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s3">owner to </span>postgres<span class="s3">;</span></p>
+<p class="p3"><br></p>
+<p class="p1">create table <span class="s1">room</span></p>
+<p class="p2">(</p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>room_id <span class="Apple-converted-space">        </span></span>numeric <span class="Apple-converted-space">      </span>not null</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constraint <span class="s1">room_id</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span></span>primary key,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">number_bedrooms </span>smallint<span class="Apple-converted-space">      </span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">price <span class="Apple-converted-space">          </span></span>numeric<span class="s1">(</span><span class="s4">8</span>, <span class="s4">2</span><span class="s1">) </span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">hotel_id<span class="Apple-converted-space">        </span></span>numeric <span class="Apple-converted-space">      </span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">city_id <span class="Apple-converted-space">        </span></span>numeric <span class="Apple-converted-space">      </span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span><span class="s1">country_id<span class="Apple-converted-space">      </span></span>numeric <span class="Apple-converted-space">      </span>not null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>constraint <span class="s1">hotel_id</span></p>
+<p class="p2"><span class="Apple-converted-space">        </span><span class="s3">foreign key </span>(hotel_id<span class="s3">, </span>city_id<span class="s3">, </span>country_id) <span class="s3">references </span>hotels (hotel_id<span class="s3">, </span>city_id<span class="s3">, </span>country_id)</p>
+<p class="p1"><span class="s1">)</span>;</p>
+<p class="p3"><br></p>
+<p class="p1">alter table <span class="s1">room</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s3">owner to </span>postgres<span class="s3">;</span></p>
+<p class="p3"><br></p>
+<p class="p3"><br></p>
+</body>
+</html>

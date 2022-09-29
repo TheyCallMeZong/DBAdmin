@@ -56,7 +56,8 @@ public class MainTripController {
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             try {
-                                main.openStage("", 500, 500);
+                                routeName = getTableView().getItems().get(getIndex()).getRouteName();
+                                main.openStage("confirm.fxml", 700, 400);
                             } catch (IOException e) {
                                 System.err.println("err");
                             }

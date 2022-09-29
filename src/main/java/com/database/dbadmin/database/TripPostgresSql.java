@@ -105,12 +105,12 @@ public class TripPostgresSql {
     }
 
     public Set<RoutePoint> getRoutePoints(String routeName){
-        String query = "select arrival_date, departure_date, hotel_name, city_name, country, hotel_class, h.hotel_id from route " +
+        String query = "SELECT arrival_date, departure_date, hotel_name, city_name, country, hotel_class, h.hotel_id FROM route " +
                 "INNER JOIN route_points rp on route.route_id = rp.route_id " +
                 "INNER JOIN hotels h on h.hotel_id = rp.hotel_id and h.city_id = rp.city_id and h.country_id = rp.country_id " +
                 "INNER JOIN cities c on c.city_id = h.city_id and c.country_id = h.country_id " +
                 "INNER JOIN countries c2 on c.country_id = c2.country_id " +
-                "WHERE route_name=?";
+                "WHERE route_name=? ORDER BY arrival_date";
         Set<RoutePoint> routePoints = new HashSet<>();
         try(PreparedStatement preparedStatement = connect.connection.prepareStatement(query)){
             preparedStatement.setString(1, routeName);
@@ -144,5 +144,10 @@ public class TripPostgresSql {
             System.out.println(e);
         }
         return null;
+    }
+
+    public boolean createTrip(){
+
+        return false;
     }
 }

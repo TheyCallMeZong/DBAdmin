@@ -37,4 +37,12 @@ public class Employee {
     public Employee(){
 
     }
+
+    public void setRole_id(String role){
+        this.role_id = Role.getRole(role);
+    }
+
+    public void setRole_id(Role role){
+        this.role_id = role;
+    }
 }

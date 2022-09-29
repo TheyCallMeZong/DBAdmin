@@ -26,10 +26,10 @@
       </AnchorPane>
       <TableView fx:id="table" layoutX="14.0" layoutY="100.0" prefHeight="286.0" prefWidth="675.0">
         <columns>
-          <TableColumn fx:id="city1" prefWidth="75.0" text="city 1" />
+          <TableColumn fx:id="city1" prefWidth="75.0" text="cities" />
           <TableColumn fx:id="dateArrival" prefWidth="75.0" text="date Arrival" />
             <TableColumn fx:id="departureDate" prefWidth="75.0" text="Departure date" />
-            <TableColumn fx:id="hotel1" prefWidth="75.0" text="hotel 1" />
+            <TableColumn fx:id="hotel1" prefWidth="75.0" text="hotels" />
             <TableColumn fx:id="hotelClass" prefWidth="75.0" text="hotel class" />
             <TableColumn fx:id="country" prefWidth="75.0" text="country" />
             <TableColumn fx:id="more" prefWidth="75.0" text="more" />
