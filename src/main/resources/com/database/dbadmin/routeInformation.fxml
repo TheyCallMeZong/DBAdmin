@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.database.dbadmin.controllers.RouteInformationController">
+   <children>
+      <AnchorPane prefHeight="77.0" prefWidth="700.0" style="-fx-background-color: #191970;">
+         <children>
+            <Text layoutX="223.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #b0c8e2;" text="Route information">
+               <font>
+                  <Font name="Toppan Bunkyu Mincho Regular" size="30.0" />
+               </font>
+            </Text>
+            <ImageView layoutX="605.0" layoutY="6.0">
+               <image>
+                  <Image url="@img/airplane.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <TableView fx:id="table" layoutX="14.0" layoutY="100.0" prefHeight="286.0" prefWidth="675.0">
+        <columns>
+          <TableColumn fx:id="city1" prefWidth="75.0" text="city 1" />
+          <TableColumn fx:id="dateArrival" prefWidth="75.0" text="date Arrival" />
+            <TableColumn fx:id="departureDate" prefWidth="75.0" text="Departure date" />
+            <TableColumn fx:id="hotel1" prefWidth="75.0" text="hotel 1" />
+            <TableColumn fx:id="hotelClass" prefWidth="75.0" text="hotel class" />
+            <TableColumn fx:id="country" prefWidth="75.0" text="country" />
+            <TableColumn fx:id="more" prefWidth="75.0" text="more" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

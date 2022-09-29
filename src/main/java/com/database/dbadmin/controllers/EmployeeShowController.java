@@ -17,6 +17,7 @@ import java.io.IOException;
 
 public class EmployeeShowController {
     public static Employee employee;
+
     @FXML
     public TableView<Employee> table;
 

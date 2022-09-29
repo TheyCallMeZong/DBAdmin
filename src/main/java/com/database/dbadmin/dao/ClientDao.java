@@ -20,6 +20,9 @@ public class ClientDao {
 
     public boolean add(String fullName, String issued, String seriesAndNumberOfPassport,
                     LocalDate birth, LocalDate dateOfIssue) {
+        if (fullName.isEmpty() || issued.isEmpty() || seriesAndNumberOfPassport.isEmpty()){
+            return false;
+        }
         Client client = createClient(fullName, issued, seriesAndNumberOfPassport, birth, dateOfIssue);
         if (client == null){
             return false;

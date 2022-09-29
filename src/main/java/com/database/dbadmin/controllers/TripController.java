@@ -8,11 +8,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
+import javafx.util.Callback;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@Deprecated
 public class TripController {
+    @FXML
+    public DatePicker dateArrival;
+
+    @FXML
+    public DatePicker dateDeparture;
 
     @FXML
     private ComboBox<String> countries;
@@ -35,8 +46,19 @@ public class TripController {
 
     @FXML
     public void initialize(){
+        dateArrival.setOnAction(x -> setCountries());
+        //Callback<DatePicker, DateCell> dayCellFactory= this.getDayCellFactory();
+        //dateArrival.setDayCellFactory(dayCellFactory);
+    }
+
+    public void tripButton() {
+
+    }
+
+    private void setCountries(){
         tripDao = new TripDao();
-        Set<Country> countryList = tripDao.getCountries();
+        Date date = Date.valueOf(dateArrival.getValue());
+        Set<Country> countryList = tripDao.getCountries(date);
         countriesObservableList = FXCollections.observableArrayList();
         for (Country country : countryList){
             countriesObservableList.add(country.getCountry());
@@ -44,10 +66,6 @@ public class TripController {
 
         countries.setItems(countriesObservableList);
         countries.setOnAction(x -> setCity1());
-    }
-
-    public void tripButton() {
-
     }
 
     private void setCity1(){
@@ -65,9 +83,39 @@ public class TripController {
         Set<Hotel> hotels = tripDao.getHotels(city1.getValue());
         hotelsObservableList = FXCollections.observableArrayList();
         for (Hotel hotel : hotels){
-            hotelsObservableList.add(hotel.getName());
+            hotelsObservableList.add(hotel.getName() + " | class - " + hotel.getHotelClass() + "*");
         }
 
         hotel1.setItems(hotelsObservableList);
     }
+
+    /*private Callback<DatePicker, DateCell> getDayCellFactory() {
+        tripDao = new TripDao();
+        Set<Date> dates = tripDao.getRoutePoints();
+        List<LocalDate> localDates = new ArrayList<>();
+        for (Date d : dates){
+            localDates.add(d.toLocalDate());
+        }
+        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
+            @Override
+            public DateCell call(final DatePicker datePicker) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        for (LocalDate date : localDates) {
+                            if (item.getYear() == date.getYear()
+                                && item.getMonth() == date.getMonth()
+                                && item.getDayOfMonth() == date.getDayOfMonth()) {
+                                setStyle("-fx-background-color: #00ff00;");
+                            }
+                        }
+                    }
+                };
+            }
+        };
+        return dayCellFactory;
+    }*/
+
 }

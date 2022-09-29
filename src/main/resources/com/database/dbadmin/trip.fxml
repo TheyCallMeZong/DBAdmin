@@ -30,10 +30,10 @@
          </children>
       </AnchorPane>
       <ComboBox layoutX="14.0" layoutY="190.0" prefWidth="150.0" promptText="Country" fx:id="countries" />
-      <DatePicker layoutX="14.0" layoutY="102.0" prefHeight="26.0" prefWidth="150.0" />
+      <DatePicker fx:id="dateArrival" layoutX="14.0" layoutY="102.0" prefHeight="26.0" prefWidth="150.0" />
       <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start of the trip" />
       <Text layoutX="14.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End of the trip" />
-      <DatePicker layoutX="14.0" layoutY="154.0" prefHeight="26.0" prefWidth="150.0" />
+      <DatePicker fx:id="dateDeparture" layoutX="14.0" layoutY="154.0" prefHeight="26.0" prefWidth="150.0" />
       <Button onAction="#tripButton" layoutX="555.0" layoutY="338.0" mnemonicParsing="false" prefHeight="26.0"
               prefWidth="131.0" text="Let's hit the road" />
       <ComboBox fx:id="hotel1" layoutX="222.0" layoutY="225.0" prefHeight="26.0" prefWidth="169.0" promptText="Hotel in 1 city" />

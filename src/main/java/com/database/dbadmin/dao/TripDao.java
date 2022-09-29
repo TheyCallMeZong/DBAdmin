@@ -1,10 +1,10 @@
 package com.database.dbadmin.dao;
 
 import com.database.dbadmin.database.TripPostgresSql;
-import com.database.dbadmin.models.City;
-import com.database.dbadmin.models.Country;
-import com.database.dbadmin.models.Hotel;
+import com.database.dbadmin.models.*;
+
 import java.util.Set;
+import java.sql.Date;
 
 public class TripDao {
     private TripPostgresSql tripPostgresSql;
@@ -13,8 +13,8 @@ public class TripDao {
         tripPostgresSql = TripPostgresSql.getInstance();
     }
 
-    public Set<Country> getCountries(){
-        return tripPostgresSql.getCountries();
+    public Set<Country> getCountries(Date date){
+        return tripPostgresSql.getCountries(date);
     }
 
     public Set<City> getCities(String country){
@@ -23,5 +23,21 @@ public class TripDao {
 
     public Set<Hotel> getHotels(String city){
         return tripPostgresSql.getHotels(city);
+    }
+
+   /* public Set<Date> getRoutePoints(){
+        return tripPostgresSql.getRoutePoints();
+    }*/
+
+    public Set<Route> getRoutes(){
+        return tripPostgresSql.getRoutes();
+    }
+
+    public Set<RoutePoint> getRoutePoints(String routeName){
+        return tripPostgresSql.getRoutePoints(routeName);
+    }
+
+    public Set<Room> getHotelInformation(Hotel hotel){
+        return tripPostgresSql.getHotelInformation(hotel);
     }
 }

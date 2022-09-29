@@ -1,0 +1,27 @@
+package com.database.dbadmin.models;
+
+import lombok.Data;
+
+import java.util.Date;
+
+@Data
+public class RoutePoint {
+    private Long id;
+    private Date arrivalDate;
+    private Date departureDate;
+    private Hotel hotel;
+    private City city;
+    private Country country;
+
+    public RoutePoint(Date arrivalDate) {
+        this.arrivalDate = arrivalDate;
+    }
+
+    public RoutePoint(Date arrivalDate, Date departureDate, Hotel hotel, City city, Country country) {
+        this.arrivalDate = arrivalDate;
+        this.departureDate = departureDate;
+        this.hotel = hotel;
+        this.city = city;
+        this.country = country;
+    }
+}

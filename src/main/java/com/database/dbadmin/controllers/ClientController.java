@@ -44,7 +44,7 @@ public class ClientController {
         }
         main = new Main();
         try {
-            main.openStage("trip.fxml", 700, 380);
+            main.openStage("mainTrip.fxml", 561, 400);
         } catch (IOException e) {
             System.out.println("error in registrationClient");
         }
