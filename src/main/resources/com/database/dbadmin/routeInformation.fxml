@@ -32,7 +32,6 @@
             <TableColumn fx:id="hotel1" prefWidth="75.0" text="hotels" />
             <TableColumn fx:id="hotelClass" prefWidth="75.0" text="hotel class" />
             <TableColumn fx:id="country" prefWidth="75.0" text="country" />
-            <TableColumn fx:id="more" prefWidth="75.0" text="more" />
         </columns>
       </TableView>
    </children>

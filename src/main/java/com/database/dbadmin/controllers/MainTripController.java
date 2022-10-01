@@ -28,9 +28,6 @@ public class MainTripController {
     @FXML
     public TableColumn<Route, Void> chooseColumn;
 
-    @FXML
-    public TableColumn<Route, Void> moreColumn;
-
     private TripDao tripDao;
 
     private ObservableList<Route> observableList;
@@ -43,7 +40,6 @@ public class MainTripController {
         observableList = FXCollections.observableList(routeSet.stream().toList());
         table.getItems().addAll(observableList);
         addChooseColumn();
-        addMoreColumn();
     }
 
     private void addChooseColumn(){
@@ -78,39 +74,5 @@ public class MainTripController {
             }
         };
         chooseColumn.setCellFactory(cellFactory);
-    }
-
-    private void addMoreColumn(){
-        Callback<TableColumn<Route, Void>, TableCell<Route, Void>> cellFactory = new Callback<>() {
-            Main main = new Main();
-            @Override
-            public TableCell<Route, Void> call(final TableColumn<Route, Void> param) {
-                final TableCell<Route, Void> cell = new TableCell<Route, Void>() {
-                    private final Button btn = new Button("more");
-                    {
-                        btn.setOnAction((ActionEvent event) -> {
-                            try {
-                                routeName = getTableView().getItems().get(getIndex()).getRouteName();
-                                main.openStage("routeInformation.fxml", 700, 400);
-                            } catch (IOException e) {
-                                System.err.println("err");
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(btn);
-                        }
-                    }
-                };
-                return cell;
-            }
-        };
-        moreColumn.setCellFactory(cellFactory);
     }
 }

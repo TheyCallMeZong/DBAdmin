@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Employee {
-    private Long id;
+    private Long employee_id;
 
     private String login;
 

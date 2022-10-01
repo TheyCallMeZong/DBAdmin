@@ -50,7 +50,7 @@ public class EmployeeEditController {
             Employee employee = new Employee(login.getText().trim(), password.trim(),
                     employeeName.getText(), employeeEmail.getText(),
                     Integer.parseInt(age.getText().trim()), employeePhoneNumber.getText());
-            employee.setId(EmployeeShowController.employee.getId());
+            employee.setEmployee_id(EmployeeShowController.employee.getEmployee_id());
             if (!employeeDao.updateEmployee(employee, flag)){
                 showWrongText();
             } else {

@@ -37,10 +37,6 @@ public class TripDao {
         return tripPostgresSql.getRoutePoints(routeName);
     }
 
-    public Set<Room> getHotelInformation(Hotel hotel){
-        return tripPostgresSql.getHotelInformation(hotel);
-    }
-
     public boolean createTrip(){
         return tripPostgresSql.createTrip();
     }

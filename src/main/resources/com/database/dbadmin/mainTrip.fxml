@@ -31,7 +31,6 @@
         <columns>
           <TableColumn fx:id="routeColumn" maxWidth="175.0" minWidth="175.0" prefWidth="175.0" text="Route" />
           <TableColumn fx:id="chooseColumn" maxWidth="175.0" minWidth="175.0" prefWidth="175.0" text="choose" />
-            <TableColumn fx:id="moreColumn" maxWidth="175.0" minWidth="175.0" prefWidth="175.0" text="more" />
         </columns>
       </TableView>
    </children>

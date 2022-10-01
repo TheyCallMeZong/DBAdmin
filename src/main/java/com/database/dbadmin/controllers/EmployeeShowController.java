@@ -116,7 +116,7 @@ public class EmployeeShowController {
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             Employee data = getTableView().getItems().get(getIndex());
-                            employeeDao.deleteEmployee(data.getId());
+                            employeeDao.deleteEmployee(data.getEmployee_id());
                             observableList.remove(data);
                             table.setItems(observableList);
                         });

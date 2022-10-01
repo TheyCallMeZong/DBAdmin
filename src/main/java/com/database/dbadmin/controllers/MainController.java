@@ -2,7 +2,6 @@ package com.database.dbadmin.controllers;
 
 import com.database.dbadmin.Main;
 import javafx.event.ActionEvent;
-
 import java.io.IOException;
 
 public class MainController {

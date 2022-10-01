@@ -14,7 +14,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         stg = stage;
-        openStage("mainTrip.fxml", stage, 700, 400);
+        openStage("authorization.fxml", stage, 700, 400);
     }
 
     public void changeScene(String fxml){

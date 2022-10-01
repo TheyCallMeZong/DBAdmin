@@ -1,9 +1,11 @@
 package com.database.dbadmin.controllers;
 
 import com.database.dbadmin.Main;
+import com.database.dbadmin.dao.TripDao;
+import com.database.dbadmin.models.Route;
 import javafx.event.ActionEvent;
-
 import java.io.IOException;
+import java.util.Set;
 
 public class EmployeeWorkSpaceController {
     private Main main;
@@ -17,14 +19,14 @@ public class EmployeeWorkSpaceController {
         }
     }
 
-    public void registrationClient() {
+    /*public void registrationClient() {
         main = new Main();
         try {
             main.openStage("trip.fxml", 700, 380);
         } catch (IOException e) {
             System.out.println("error in registrationClient");
         }
-    }
+    }*/
 
 
     public void tripButton() {
@@ -33,6 +35,20 @@ public class EmployeeWorkSpaceController {
             main.openStage("check.fxml", 350, 415);
         } catch (IOException e) {
             System.out.println("error in tripButton");
+        }
+    }
+
+    public void logout(ActionEvent actionEvent) {
+        main = new Main();
+        main.changeScene("authorization.fxml");
+    }
+
+    public void openAvailableTrips(ActionEvent actionEvent) {
+        main =  new Main();
+        try {
+            main.openStage("availableTrips.fxml");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

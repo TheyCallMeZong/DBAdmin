@@ -10,6 +10,8 @@ import java.util.regex.Pattern;
 public class ClientDao {
     private ClientPostgresSql clientPostgresSql;
 
+    public static Client client;
+
     public ClientDao(){
         clientPostgresSql = ClientPostgresSql.getInstance();
     }
@@ -32,6 +34,7 @@ public class ClientDao {
 
     private Client createClient(String fullName, String issued, String seriesAndNumberOfPassport,
                                 LocalDate birth, LocalDate dateOfIssue){
+
         Client client;
         String regexSeries = "^\\d{4}";
         String regexNumber = "^\\d{6}";
@@ -56,6 +59,7 @@ public class ClientDao {
 
             client = new Client(name, surname, patronymic, birthClient, seriesPassport,
                     numberPassport, issued, dateOfIssuePassport, " ");
+            this.client = client;
             return client;
         } catch (DateTimeException ex){
             System.out.println(ex);

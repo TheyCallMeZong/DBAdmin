@@ -111,7 +111,7 @@ public class EmployeePostgresSql {
             preparedStatement.setString(4, employee.getEmail());
             preparedStatement.setString(5, employee.getPhoneNumber());
             preparedStatement.setInt(6, employee.getAge());
-            preparedStatement.setLong(7, employee.getId());
+            preparedStatement.setLong(7, employee.getEmployee_id());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

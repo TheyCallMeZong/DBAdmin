@@ -130,22 +130,6 @@ public class TripPostgresSql {
         return null;
     }
 
-    public Set<Room> getHotelInformation(Hotel hotel){
-        String query = "SELECT number_bedrooms, price FROM room WHERE hotel_id=?";
-        Set<Room> rooms = new HashSet<>();
-        try(PreparedStatement preparedStatement = connect.connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, hotel.getId());
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
-                rooms.add(new Room(resultSet.getInt("number_bedrooms"), resultSet.getDouble("price")));
-            }
-            return rooms;
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return null;
-    }
-
     public boolean createTrip(){
 
         return false;
