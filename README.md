@@ -7,4 +7,4 @@
 
 Готовая бд:
 
-<img width="1081" alt="Снимок экрана 2022-10-01 в 18 40 51" src="https://user-images.githubusercontent.com/75227915/193407815-2d8d1965-3857-4aae-9449-c25138605338.png">
+<img width="1080" alt="Снимок экрана 2022-10-02 в 18 01 20" src="https://user-images.githubusercontent.com/75227915/193450693-b34afb9f-34b5-4f00-a0ee-54d9f2c45657.png">
