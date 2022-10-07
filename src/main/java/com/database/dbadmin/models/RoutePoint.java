@@ -3,6 +3,7 @@ package com.database.dbadmin.models;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 public class RoutePoint {
@@ -12,6 +13,8 @@ public class RoutePoint {
     private Hotel hotel;
     private City city;
     private Country country;
+
+    private Set<Sight> sightSet;
 
     public RoutePoint(Date arrivalDate) {
         this.arrivalDate = arrivalDate;

@@ -12,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 public class AvailableTripsController {
@@ -59,7 +60,7 @@ public class AvailableTripsController {
     }
 
     private void setRoutePoints() {
-        Set<RoutePoint> routePoints = tripDao.getRoutePoints(routeName.getValue());
+        List<RoutePoint> routePoints = tripDao.getRoutePoints(routeName.getValue());
         cities.setCellValueFactory(x -> new SimpleObjectProperty<>(x.getValue().getCity().getName()));
         hotels.setCellValueFactory(x -> new SimpleObjectProperty<>(x.getValue().getHotel().getName()));
         arrivalDate.setCellValueFactory(x -> new SimpleObjectProperty<>(x.getValue().getArrivalDate()));

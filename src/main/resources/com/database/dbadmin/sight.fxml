@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="369.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.database.dbadmin.controllers.SightController">
+   <children>
+      <AnchorPane prefHeight="86.0" prefWidth="369.0" style="-fx-background-color: #191970#191970;">
+         <children>
+            <Text layoutX="150.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #b0c8e2#b0c8e2;" text="Sight">
+               <font>
+                  <Font name="Toppan Bunkyu Mincho Regular" size="30.0" />
+               </font>
+            </Text>
+            <ImageView layoutX="291.0" layoutY="11.0">
+               <image>
+                  <Image url="@img/airplane.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <TableView fx:id="table" layoutX="30.0" layoutY="110.0" prefHeight="270.0" prefWidth="310.0">
+        <columns>
+          <TableColumn fx:id="sightsColumn" prefWidth="154.0" text="sights" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

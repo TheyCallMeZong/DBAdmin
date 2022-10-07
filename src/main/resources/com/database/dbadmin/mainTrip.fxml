@@ -8,10 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="561.0" xmlns="http://javafx.com/javafx/18"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.database.dbadmin.controllers.MainTripController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="561.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.database.dbadmin.controllers.MainTripController">
    <children>
       <AnchorPane prefHeight="77.0" prefWidth="561.0" style="-fx-background-color: #191970;">
          <children>
@@ -29,8 +26,9 @@
       </AnchorPane>
       <TableView fx:id="table" layoutX="14.0" layoutY="100.0" prefHeight="280.0" prefWidth="525.0">
         <columns>
-          <TableColumn fx:id="routeColumn" maxWidth="175.0" minWidth="175.0" prefWidth="175.0" text="Route" />
-          <TableColumn fx:id="chooseColumn" maxWidth="175.0" minWidth="175.0" prefWidth="175.0" text="choose" />
+          <TableColumn fx:id="routeColumn" maxWidth="132.0" minWidth="132.0" prefWidth="132.0" text="Route" />
+          <TableColumn fx:id="chooseColumn" maxWidth="124.0" minWidth="124.0" prefWidth="124.0" text="choose" />
+          <TableColumn fx:id="moreColumn" maxWidth="135.0" minWidth="133.0" prefWidth="135.0" text="more" />
         </columns>
       </TableView>
    </children>

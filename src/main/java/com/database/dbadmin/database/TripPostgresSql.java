@@ -3,7 +3,9 @@ package com.database.dbadmin.database;
 import com.database.dbadmin.models.*;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class TripPostgresSql {
@@ -104,21 +106,22 @@ public class TripPostgresSql {
         return null;
     }
 
-    public Set<RoutePoint> getRoutePoints(String routeName){
-        String query = "SELECT arrival_date, departure_date, hotel_name, city_name, country, hotel_class, h.hotel_id FROM route " +
+    public List<RoutePoint> getRoutePoints(String routeName){
+        String query = "SELECT d.arrival_date, d.departure_date, hotel_name, city_name, country, hotel_class, h.hotel_id, h.city_id FROM route " +
                 "INNER JOIN route_points rp on route.route_id = rp.route_id " +
                 "INNER JOIN hotels h on h.hotel_id = rp.hotel_id and h.city_id = rp.city_id and h.country_id = rp.country_id " +
                 "INNER JOIN cities c on c.city_id = h.city_id and c.country_id = h.country_id " +
                 "INNER JOIN countries c2 on c.country_id = c2.country_id " +
-                "WHERE route_name=? ORDER BY arrival_date";
-        Set<RoutePoint> routePoints = new HashSet<>();
+                "INNER JOIN date d on rp.date_id = d.date_id " +
+                "WHERE route_name=? ORDER BY d.arrival_date";
+        List<RoutePoint> routePoints = new ArrayList<>();
         try(PreparedStatement preparedStatement = connect.connection.prepareStatement(query)){
             preparedStatement.setString(1, routeName);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 Hotel hotel = new Hotel(resultSet.getLong("hotel_id"), resultSet.getString("hotel_name"),
                         resultSet.getByte("hotel_class"));
-                City city = new City(resultSet.getString("city_name"));
+                City city = new City(resultSet.getLong("city_id"), resultSet.getString("city_name"));
                 Country country = new Country(resultSet.getString("country"));
                 routePoints.add(new RoutePoint(resultSet.getDate("arrival_date"), resultSet.getDate("departure_date"),
                                 hotel, city, country));
@@ -130,8 +133,54 @@ public class TripPostgresSql {
         return null;
     }
 
-    public boolean createTrip(){
+    public boolean createTrip(Long groupId){
+        String query = "INSERT INTO trip(employee_id, group_id, penalty, departure_date, arrival_date, route_id, sum) " +
+                "VALUES (?, ?, ?, ?::date, ?::date, ?, ?);";
 
+        try(PreparedStatement preparedStatement = connect.connection.prepareStatement(query)){
+            
+        } catch (SQLException e) {
+            System.out.println("err in createTrip");
+        }
         return false;
+    }
+
+    public boolean addClientToGroup(String routeName){
+        Group group = getGroupByRouteName(routeName);
+        if (group != null) {
+            String query = "INSERT INTO client_group (client_id, group_id) VALUES (?, ?)";
+            try (PreparedStatement preparedStatement = connect.connection.prepareStatement(query)) {
+                preparedStatement.setLong(1, ClientPostgresSql.client_id);
+                preparedStatement.setLong(2, group.getId());
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+          String query = "INSERT INTO client_group";
+          try(PreparedStatement preparedStatement = connect.connection.prepareStatement(query)) {
+              createTrip(group.getId());
+          } catch (SQLException e) {
+              System.err.println(e.getMessage());
+          }
+        }
+        return false;
+    }
+
+    private Group getGroupByRouteName(String routeName){
+        String query = "SELECT t.group_id FROM \"group\" INNER JOIN trip t ON route_id = " +
+                "(SELECT route_id FROM route WHERE route_name=?);";
+        Group g = null;
+        try(PreparedStatement preparedStatement = connect.connection.prepareStatement(query)) {
+            preparedStatement.setString(1, routeName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                g = new Group(resultSet.getLong("group_id"));
+            }
+            return g;
+        } catch (SQLException e) {
+            System.out.println("err in getGroup");
+        }
+        return g;
     }
 }

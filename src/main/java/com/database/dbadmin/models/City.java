@@ -20,6 +20,11 @@ public class City {
     public City() {
     }
 
+    public City(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public City(String name, Country country, Set<Hotel> hotelSet) {
         this.name = name;
         this.country = country;

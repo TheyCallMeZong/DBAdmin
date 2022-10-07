@@ -67,7 +67,7 @@ public class EmployeePostgresSql {
     }
 
     public void delete(long id) {
-        String query = "DELETE FROM employee WHERE id=?";
+        String query = "DELETE FROM employee WHERE employee_id=?";
         try(PreparedStatement preparedStatement = postgresSqlConnect.connection.prepareStatement(query)){
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
@@ -164,6 +164,12 @@ public class EmployeePostgresSql {
     }
 
     private Role getRole(int id){
-        return id == 1 ? Role.ADMIN : Role.USER;
+        if (id == 1){
+            return Role.ADMIN;
+        } else if (id == 2) {
+            return Role.USER;
+        } else {
+            return Role.TRAVEL_AGENT;
+        }
     }
 }

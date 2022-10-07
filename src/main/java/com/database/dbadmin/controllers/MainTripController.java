@@ -28,6 +28,9 @@ public class MainTripController {
     @FXML
     public TableColumn<Route, Void> chooseColumn;
 
+    @FXML
+    public TableColumn<Route, Void> moreColumn;
+
     private TripDao tripDao;
 
     private ObservableList<Route> observableList;
@@ -39,21 +42,23 @@ public class MainTripController {
         Set<Route> routeSet = tripDao.getRoutes();
         observableList = FXCollections.observableList(routeSet.stream().toList());
         table.getItems().addAll(observableList);
-        addChooseColumn();
+
+        addButtonToTable("choose", "confirm.fxml", chooseColumn);
+        addButtonToTable("more", "routeInformation.fxml", moreColumn);
     }
 
-    private void addChooseColumn(){
+    private void addButtonToTable(String btnName, String stage, TableColumn<Route, Void> btn){
         Callback<TableColumn<Route, Void>, TableCell<Route, Void>> cellFactory = new Callback<>() {
             Main main = new Main();
             @Override
             public TableCell<Route, Void> call(final TableColumn<Route, Void> param) {
                 final TableCell<Route, Void> cell = new TableCell<Route, Void>() {
-                    private final Button btn = new Button("choose");
+                    private final Button btn = new Button(btnName);
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             try {
                                 routeName = getTableView().getItems().get(getIndex()).getRouteName();
-                                main.openStage("confirm.fxml", 700, 400);
+                                main.openStage(stage, 700, 400);
                             } catch (IOException e) {
                                 System.err.println("err");
                             }
@@ -73,6 +78,6 @@ public class MainTripController {
                 return cell;
             }
         };
-        chooseColumn.setCellFactory(cellFactory);
+        btn.setCellFactory(cellFactory);
     }
 }

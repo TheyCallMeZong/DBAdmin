@@ -52,7 +52,7 @@ public class EmployeeShowController {
 
     @FXML
     void initialize() {
-        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        id.setCellValueFactory(new PropertyValueFactory<>("employee_id"));
         id.setMaxWidth(40);
         id.setMinWidth(40);
         name.setCellValueFactory(new PropertyValueFactory<>("name"));

@@ -16,20 +16,25 @@ public class ClientDao {
         clientPostgresSql = ClientPostgresSql.getInstance();
     }
 
-    public void update(){
-        clientPostgresSql.updateClient();
-    }
-
     public boolean add(String fullName, String issued, String seriesAndNumberOfPassport,
                     LocalDate birth, LocalDate dateOfIssue) {
-        if (fullName.isEmpty() || issued.isEmpty() || seriesAndNumberOfPassport.isEmpty()){
+        if (checkClient(fullName, issued, seriesAndNumberOfPassport, birth, dateOfIssue)){
+            return clientPostgresSql.addClient(client);
+        }
+        return false;
+    }
+
+    public boolean checkClient(String fullName, String issued, String seriesAndNumberOfPassport,
+                               LocalDate birth, LocalDate dateOfIssue){
+        if (fullName.isEmpty() || issued.isEmpty() || seriesAndNumberOfPassport.isEmpty() ||
+            fullName.split(" ").length > 3 || fullName.split(" ").length < 2){
             return false;
         }
         Client client = createClient(fullName, issued, seriesAndNumberOfPassport, birth, dateOfIssue);
         if (client == null){
             return false;
         }
-        return clientPostgresSql.addClient(client);
+        return true;
     }
 
     private Client createClient(String fullName, String issued, String seriesAndNumberOfPassport,

@@ -3,6 +3,7 @@ package com.database.dbadmin.dao;
 import com.database.dbadmin.database.TripPostgresSql;
 import com.database.dbadmin.models.*;
 
+import java.util.List;
 import java.util.Set;
 import java.sql.Date;
 
@@ -33,11 +34,11 @@ public class TripDao {
         return tripPostgresSql.getRoutes();
     }
 
-    public Set<RoutePoint> getRoutePoints(String routeName){
+    public List<RoutePoint> getRoutePoints(String routeName){
         return tripPostgresSql.getRoutePoints(routeName);
     }
 
-    public boolean createTrip(){
-        return tripPostgresSql.createTrip();
+    public boolean addClientToTrip(String routeName){
+        return tripPostgresSql.addClientToGroup(routeName);
     }
 }

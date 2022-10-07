@@ -3,6 +3,7 @@ package com.database.dbadmin.database;
 import com.database.dbadmin.models.Client;
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -19,9 +20,11 @@ public class ClientPostgresSql {
         return instance == null ? new ClientPostgresSql() : instance;
     }
 
+    public static Long client_id;
+
     public boolean addClient(Client client){
         String query = "INSERT INTO clients(name, surname, patronymic, birth, passport_series, passport_number, passport_issued, date_issue, photo) " +
-                "VALUES(?, ?, ?, ?::date, ?, ?, ?, ?::date, ?)";
+                "VALUES(?, ?, ?, ?::date, ?, ?, ?, ?::date, ?) returning client_id";
 
         try (PreparedStatement preparedStatement = clientPostgresSql.connection.prepareStatement(query)) {
             Field[] fields = client.getClass().getDeclaredFields();
@@ -32,8 +35,10 @@ public class ClientPostgresSql {
                 Object result = field.get(client);
                 preparedStatement.setString(i, result == null ? null : result.toString());
             }
-            preparedStatement.executeUpdate();
-
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                client_id = resultSet.getLong("client_id");
+            }
             System.out.println("Successfully created");
             return true;
         } catch (SQLException e) {
@@ -42,17 +47,5 @@ public class ClientPostgresSql {
             throw new RuntimeException(e);
         }
         return false;
-    }
-
-    public void updateClient(){
-
-    }
-
-    public Client getClient(){
-        return null;
-    }
-
-    public List<Client> getClients(){
-        return null;
     }
 }

@@ -37,7 +37,7 @@ public class ClientController {
 
     @FXML
     public void registrationClient() {
-        if(!clientDao.add(fullName.getText(), issued.getText(), seriesAndNumberOfPassport.getText(),
+        if(!clientDao.checkClient(fullName.getText(), issued.getText(), seriesAndNumberOfPassport.getText(),
                 birth.getValue(), dateOfIssue.getValue())){
             err.setText("Incorrect data");
             return;

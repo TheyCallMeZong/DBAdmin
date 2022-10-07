@@ -45,4 +45,9 @@ public class Employee {
     public void setRole_id(Role role){
         this.role_id = role;
     }
+
+    @Override
+    public String toString(){
+        return getName();
+    }
 }
