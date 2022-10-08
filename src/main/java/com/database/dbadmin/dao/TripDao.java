@@ -38,7 +38,7 @@ public class TripDao {
         return tripPostgresSql.getRoutePoints(routeName);
     }
 
-    public boolean addClientToTrip(String routeName){
-        return tripPostgresSql.addClientToGroup(routeName);
+    public boolean addClientToTrip(String routeName, Long employeeId){
+        return tripPostgresSql.addClientToGroup(routeName, employeeId);
     }
 }

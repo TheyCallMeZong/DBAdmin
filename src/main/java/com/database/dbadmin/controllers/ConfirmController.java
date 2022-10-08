@@ -66,7 +66,7 @@ public class ConfirmController {
         clientDao = new ClientDao();
         if (clientDao.add(fullName.getText(), issuedBy.getText(), seriesAndNumberOfPassport.getText(), birth.getValue(),
                 dateOfIssue.getValue())){
-            tripDao.addClientToTrip(route.getText());
+            tripDao.addClientToTrip(route.getText(), employee.getValue().getEmployee_id());
             getMessageBox("Success!", "The client has been created successfully and will " +
                     "be on the road soon!", "Have a good flight!");
         } else {

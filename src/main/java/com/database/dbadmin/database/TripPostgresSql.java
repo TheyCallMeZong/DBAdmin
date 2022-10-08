@@ -1,6 +1,8 @@
 package com.database.dbadmin.database;
 
+import com.database.dbadmin.dao.GroupDao;
 import com.database.dbadmin.models.*;
+import lombok.Data;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ public class TripPostgresSql {
     public static TripPostgresSql getInstance(){
         return instance == null ? new TripPostgresSql() : instance;
     }
+
+    private GroupDao groupDao;
 
     public Set<Country> getCountries(Date date){
         String query = "SELECT country FROM countries WHERE country_id = " +
@@ -123,8 +127,8 @@ public class TripPostgresSql {
                         resultSet.getByte("hotel_class"));
                 City city = new City(resultSet.getLong("city_id"), resultSet.getString("city_name"));
                 Country country = new Country(resultSet.getString("country"));
-                routePoints.add(new RoutePoint(resultSet.getDate("arrival_date"), resultSet.getDate("departure_date"),
-                                hotel, city, country));
+                routePoints.add(new RoutePoint(resultSet.getDate("arrival_date"),
+                        resultSet.getDate("departure_date"), hotel, city, country));
             }
             return routePoints;
         } catch (SQLException e) {
@@ -133,20 +137,9 @@ public class TripPostgresSql {
         return null;
     }
 
-    public boolean createTrip(Long groupId){
-        String query = "INSERT INTO trip(employee_id, group_id, penalty, departure_date, arrival_date, route_id, sum) " +
-                "VALUES (?, ?, ?, ?::date, ?::date, ?, ?);";
-
-        try(PreparedStatement preparedStatement = connect.connection.prepareStatement(query)){
-            
-        } catch (SQLException e) {
-            System.out.println("err in createTrip");
-        }
-        return false;
-    }
-
-    public boolean addClientToGroup(String routeName){
-        Group group = getGroupByRouteName(routeName);
+    public boolean addClientToGroup(String routeName, Long employeeId){
+        groupDao = new GroupDao();
+        Group group = groupDao.getGroupByRouteName(routeName);
         if (group != null) {
             String query = "INSERT INTO client_group (client_id, group_id) VALUES (?, ?)";
             try (PreparedStatement preparedStatement = connect.connection.prepareStatement(query)) {
@@ -157,9 +150,13 @@ public class TripPostgresSql {
                 System.out.println(e.getMessage());
             }
         } else {
-          String query = "INSERT INTO client_group";
-          try(PreparedStatement preparedStatement = connect.connection.prepareStatement(query)) {
-              createTrip(group.getId());
+            Integer groupId = groupDao.createGroup();
+            String query = "INSERT INTO client_group (client_id, group_id) VALUES (?, ?)";
+             try(PreparedStatement preparedStatement = connect.connection.prepareStatement(query)) {
+                 preparedStatement.setLong(1, ClientPostgresSql.client_id);
+                 preparedStatement.setInt(2, groupId);
+                 preparedStatement.executeUpdate();
+                 createTrip(groupId, routeName, employeeId);
           } catch (SQLException e) {
               System.err.println(e.getMessage());
           }
@@ -167,20 +164,73 @@ public class TripPostgresSql {
         return false;
     }
 
-    private Group getGroupByRouteName(String routeName){
-        String query = "SELECT t.group_id FROM \"group\" INNER JOIN trip t ON route_id = " +
-                "(SELECT route_id FROM route WHERE route_name=?);";
-        Group g = null;
+    private void createTrip(int groupId, String routeName, Long employeeId){
+        String query = "INSERT INTO trip(employee_id, group_id, penalty, departure_date, arrival_date, route_id, sum) " +
+                "VALUES (?, ?, ?, ?::date, ?::date, ?, ?);";
+        try(PreparedStatement preparedStatement = connect.connection.prepareStatement(query)){
+            Date arrivalDate = getDateArrivalByRouteName(routeName);
+            Date departureDate = getDateDepartureByRouteName(routeName);
+            preparedStatement.setLong(1, employeeId);
+            preparedStatement.setLong(2, groupId);
+            preparedStatement.setDouble(3, 0);
+            preparedStatement.setDate(4, departureDate);
+            preparedStatement.setDate(5, arrivalDate);
+            preparedStatement.setLong(6, getRouteId(routeName));
+            preparedStatement.setDouble(7, 0);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("err in createTrip");
+        }
+    }
+
+    private Date getDateArrivalByRouteName(String routeName){
+        String query = "SELECT arrival_date FROM route_points INNER JOIN route r on r.route_name=?" +
+                " INNER JOIN date d on d.date_id = route_points.date_id\n" +
+                "    order by d.arrival_date limit 1";
+        Date date = null;
+        try (PreparedStatement pr = connect.connection.prepareStatement(query)) {
+            pr.setString(1, routeName);
+            ResultSet resultSet = pr.executeQuery();
+            while (resultSet.next()){
+                date = resultSet.getDate("arrival_date");
+            }
+            return date;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return date;
+    }
+
+    private Date getDateDepartureByRouteName(String routeName){
+        String query = "SELECT departure_date FROM route_points INNER JOIN route r on " +
+                "r.route_name=? INNER JOIN date d on d.date_id = route_points.date_id " +
+                "order by d.arrival_date DESC limit 1";
+        Date date = null;
+        try (PreparedStatement pr = connect.connection.prepareStatement(query)) {
+            pr.setString(1, routeName);
+            ResultSet resultSet = pr.executeQuery();
+            while (resultSet.next()){
+                date = resultSet.getDate("departure_date");
+            }
+            return date;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return date;
+    }
+
+    private Long getRouteId(String routeName){
+        String query = "SELECT route_id FROM route WHERE route_name=?";
+        Long id = -1L;
         try(PreparedStatement preparedStatement = connect.connection.prepareStatement(query)) {
             preparedStatement.setString(1, routeName);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
-                g = new Group(resultSet.getLong("group_id"));
+            while (resultSet.next()){
+                id = resultSet.getLong("route_id");
             }
-            return g;
         } catch (SQLException e) {
-            System.out.println("err in getGroup");
+            System.out.println(e.getMessage());
         }
-        return g;
+        return id;
     }
 }
