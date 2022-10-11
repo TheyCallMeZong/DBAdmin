@@ -1,21 +1,27 @@
 package com.database.dbadmin.controllers;
 
+import com.database.dbadmin.Main;
 import com.database.dbadmin.dao.TripDao;
 import com.database.dbadmin.models.Route;
 import com.database.dbadmin.models.RoutePoint;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 public class AvailableTripsController {
+    public Label employee;
+    public static String route;
     @FXML
     private TableColumn<RoutePoint, Date> arrivalDate;
 
@@ -69,5 +75,16 @@ public class AvailableTripsController {
         country.setCellValueFactory(x -> new SimpleObjectProperty<>(x.getValue().getCountry().getCountry()));
         routePointObservableList = FXCollections.observableArrayList(routePoints.stream().toList());
         table.setItems(routePointObservableList);
+        employee.setText("Employee: " + tripDao.getEmployee(routeName.getValue()));
+    }
+
+    public void viewClients(ActionEvent actionEvent) {
+        Main main = new Main();
+        try {
+            route = routeName.getValue();
+            main.openStage("clientsInRoute.fxml");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

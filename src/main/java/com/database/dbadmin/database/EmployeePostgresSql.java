@@ -121,15 +121,36 @@ public class EmployeePostgresSql {
         }
     }
 
-    private String getPasswordHash(@NotNull String str) throws NoSuchAlgorithmException {
-        MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
-        byte[] bytes = messageDigest.digest(str.getBytes());
-        StringBuilder strBuild = new StringBuilder();
-        for (byte b : bytes) {
-            strBuild.append(String.format("%02X", b));
+    public Employee getAllEmployeeFromRoute(String routeName) {
+        String query = "SELECT name FROM trip INNER JOIN employee e on e.employee_id = trip.employee_id INNER JOIN route r on r.route_id = trip.route_id AND r.route_name=?";
+        try (PreparedStatement preparedStatement = postgresSqlConnect.connection.prepareStatement(query)){
+            preparedStatement.setString(1, routeName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Employee employee = getEmployee(resultSet);
+                return employee;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            System.out.println(e.getMessage());
         }
+        return null;
+    }
 
-        return strBuild.toString();
+    public Set<String> getRoles(){
+        String query = "SELECT role_name FROM role";
+        Set<String> roles = new HashSet<>();
+        try(PreparedStatement preparedStatement = postgresSqlConnect.connection.prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                roles.add(resultSet.getString("role_name"));
+            }
+            return roles;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
     private Employee getEmployee(ResultSet set) throws SQLException, NoSuchFieldException, IllegalAccessException {
@@ -148,21 +169,6 @@ public class EmployeePostgresSql {
         return employee;
     }
 
-    public Set<String> getRoles(){
-        String query = "SELECT role_name FROM role";
-        Set<String> roles = new HashSet<>();
-        try(PreparedStatement preparedStatement = postgresSqlConnect.connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                roles.add(resultSet.getString("role_name"));
-            }
-            return roles;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
-    }
-
     private Role getRole(int id){
         if (id == 1){
             return Role.ADMIN;
@@ -171,5 +177,16 @@ public class EmployeePostgresSql {
         } else {
             return Role.TRAVEL_AGENT;
         }
+    }
+
+    private String getPasswordHash(@NotNull String str) throws NoSuchAlgorithmException {
+        MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+        byte[] bytes = messageDigest.digest(str.getBytes());
+        StringBuilder strBuild = new StringBuilder();
+        for (byte b : bytes) {
+            strBuild.append(String.format("%02X", b));
+        }
+
+        return strBuild.toString();
     }
 }

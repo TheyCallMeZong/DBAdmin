@@ -61,4 +61,8 @@ public class EmployeeDao {
     public Set<String> getRoles(){
         return postgresSqlConnect.getRoles();
     }
+
+    public Employee getAllEmployeeFromRoute(String routeName) {
+        return postgresSqlConnect.getAllEmployeeFromRoute(routeName);
+    }
 }

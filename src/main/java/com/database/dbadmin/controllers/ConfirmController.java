@@ -93,11 +93,16 @@ public class ConfirmController {
 
     private void setEmployee() {
         EmployeeDao employeeDao = new EmployeeDao();
-        List<Employee> employeeList = employeeDao.getAllEmployee();
+        Employee employeeDaoAllEmployeeFromRoute = employeeDao.getAllEmployeeFromRoute(MainTripController.routeName);
         ObservableList<Employee> employeeObservableList = FXCollections.observableArrayList();
-        for (Employee employee : employeeList){
-            if(employee.getRole_id() == Role.TRAVEL_AGENT) {
-                employeeObservableList.add(employee);
+        if (employeeDaoAllEmployeeFromRoute != null){
+            employeeObservableList.add(employeeDaoAllEmployeeFromRoute);
+        } else {
+            List<Employee> employeeList = employeeDao.getAllEmployee();
+            for (Employee employee : employeeList) {
+                if (employee.getRole_id() == Role.TRAVEL_AGENT) {
+                    employeeObservableList.add(employee);
+                }
             }
         }
         this.employee.setItems(employeeObservableList);

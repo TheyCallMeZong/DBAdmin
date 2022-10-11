@@ -19,25 +19,6 @@ public class EmployeeWorkSpaceController {
         }
     }
 
-    /*public void registrationClient() {
-        main = new Main();
-        try {
-            main.openStage("trip.fxml", 700, 380);
-        } catch (IOException e) {
-            System.out.println("error in registrationClient");
-        }
-    }*/
-
-
-    public void tripButton() {
-        main = new Main();
-        try {
-            main.openStage("check.fxml", 350, 415);
-        } catch (IOException e) {
-            System.out.println("error in tripButton");
-        }
-    }
-
     public void logout(ActionEvent actionEvent) {
         main = new Main();
         main.changeScene("authorization.fxml");

@@ -5,6 +5,7 @@ import com.database.dbadmin.models.Client;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class ClientDao {
@@ -70,5 +71,13 @@ public class ClientDao {
             System.out.println(ex);
             return null;
         }
+    }
+
+    public List<Client> getAllClientsFromRoute(String route) {
+        return clientPostgresSql.getAllClientsFromRoute(route);
+    }
+
+    public void deleteClient(Client client) {
+        clientPostgresSql.deleteClient(client.getId());
     }
 }

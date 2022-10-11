@@ -5,7 +5,6 @@ import com.database.dbadmin.models.*;
 
 import java.util.List;
 import java.util.Set;
-import java.sql.Date;
 
 public class TripDao {
     private TripPostgresSql tripPostgresSql;
@@ -13,22 +12,6 @@ public class TripDao {
     public TripDao(){
         tripPostgresSql = TripPostgresSql.getInstance();
     }
-
-    public Set<Country> getCountries(Date date){
-        return tripPostgresSql.getCountries(date);
-    }
-
-    public Set<City> getCities(String country){
-        return tripPostgresSql.getCities(country);
-    }
-
-    public Set<Hotel> getHotels(String city){
-        return tripPostgresSql.getHotels(city);
-    }
-
-   /* public Set<Date> getRoutePoints(){
-        return tripPostgresSql.getRoutePoints();
-    }*/
 
     public Set<Route> getRoutes(){
         return tripPostgresSql.getRoutes();
@@ -40,5 +23,13 @@ public class TripDao {
 
     public boolean addClientToTrip(String routeName, Long employeeId){
         return tripPostgresSql.addClientToGroup(routeName, employeeId);
+    }
+
+    public String getEmployee(String value) {
+        return tripPostgresSql.getEmployee(value);
+    }
+
+    public void deleteTrip(Long groupId) {
+        tripPostgresSql.deleteTrip(groupId);
     }
 }

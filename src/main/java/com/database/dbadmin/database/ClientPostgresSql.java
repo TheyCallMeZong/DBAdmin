@@ -1,10 +1,12 @@
 package com.database.dbadmin.database;
 
+import com.database.dbadmin.dao.TripDao;
 import com.database.dbadmin.models.Client;
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClientPostgresSql {
@@ -47,5 +49,84 @@ public class ClientPostgresSql {
             throw new RuntimeException(e);
         }
         return false;
+    }
+
+    public List<Client> getAllClientsFromRoute(String route) {
+        String query = "SELECT name, surname, passport_series, passport_number, c.client_id FROM trip INNER JOIN client_group cg on trip.group_id = cg.group_id INNER JOIN \"group\" g on g.group_id = cg.group_id INNER JOIN clients c on c.client_id = cg.client_id\n" +
+                "    INNER JOIN route r on r.route_id = trip.route_id WHERE r.route_name=?";
+        List<Client> clients = new ArrayList<>();
+        try(PreparedStatement preparedStatement = clientPostgresSql.connection.prepareStatement(query)) {
+            preparedStatement.setString(1, route);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                Client client = new Client();
+                client.setId(resultSet.getLong("client_id"));
+                client.setName(resultSet.getString("name"));
+                client.setSurname(resultSet.getString("surname"));
+                client.setPassportSeries(resultSet.getString("passport_series"));
+                client.setPassportNumber(resultSet.getString("passport_number"));
+                clients.add(client);
+            }
+            return clients;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public void deleteClient(Long id) {
+        Long groupId = getGroup(id);
+        deleteFromClientGroup(id);
+        deleteFromClients(id);
+        check(groupId);
+    }
+
+    private void deleteFromClientGroup(Long id){
+        String query = "DELETE FROM client_group where client_id=?";
+        try(PreparedStatement preparedStatement = clientPostgresSql.connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private Long getGroup(Long id) {
+        String queryToGetGroupId = "SELECT group_id FROM client_group WHERE client_id=?";
+        Long groupId = -1L;
+        try (PreparedStatement preparedStatement = clientPostgresSql.connection.prepareStatement(queryToGetGroupId)){
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                groupId = resultSet.getLong("group_id");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return groupId;
+    }
+
+    private void deleteFromClients(Long id){
+        String queryToDeleteFromClients = "DELETE FROM clients where client_id=?";
+        try (PreparedStatement preparedStatement = clientPostgresSql.connection.prepareStatement(queryToDeleteFromClients)){
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void check(Long groupId){
+        String check = "SELECT * FROM client_group WHERE group_id=?";
+        try (PreparedStatement preparedStatement = clientPostgresSql.connection.prepareStatement(check)) {
+            preparedStatement.setLong(1, groupId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()){
+                TripDao tripDao = new TripDao();
+                tripDao.deleteTrip(groupId);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
