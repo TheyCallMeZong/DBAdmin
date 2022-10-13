@@ -4,15 +4,13 @@ import com.database.dbadmin.Main;
 import com.database.dbadmin.dao.TripDao;
 import com.database.dbadmin.models.Route;
 import com.database.dbadmin.models.RoutePoint;
+import com.database.dbadmin.models.Trip;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.util.Date;
@@ -22,6 +20,10 @@ import java.util.Set;
 public class AvailableTripsController {
     public Label employee;
     public static String route;
+
+    @FXML
+    public TextField penalty;
+
     @FXML
     private TableColumn<RoutePoint, Date> arrivalDate;
 
@@ -74,8 +76,17 @@ public class AvailableTripsController {
         hotelClass.setCellValueFactory(x -> new SimpleObjectProperty<>(x.getValue().getHotel().getHotelClass()));
         country.setCellValueFactory(x -> new SimpleObjectProperty<>(x.getValue().getCountry().getCountry()));
         routePointObservableList = FXCollections.observableArrayList(routePoints.stream().toList());
+        addPenalty();
         table.setItems(routePointObservableList);
         employee.setText("Employee: " + tripDao.getEmployee(routeName.getValue()));
+    }
+
+    private void addPenalty() {
+        Trip trip = tripDao.getTrip(routeName.getValue());
+        penalty.setText(String.valueOf(trip.getPenalty()));
+        penalty.textProperty().addListener((observable, oldValue, newValue) -> {
+            tripDao.updatePenalty(newValue, trip.getId());
+        });
     }
 
     public void viewClients(ActionEvent actionEvent) {

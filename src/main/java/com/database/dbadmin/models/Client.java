@@ -48,4 +48,12 @@ public class Client {
     public void setDateOfIssue(Calendar calendar){
         dateOfIssue = new Date(calendar.getTime().getTime());
     }
+
+    public void setBirth(Date birth) {
+        this.birth = birth;
+    }
+
+    public void setDateOfIssue(Date dateOfIssue) {
+        this.dateOfIssue = dateOfIssue;
+    }
 }

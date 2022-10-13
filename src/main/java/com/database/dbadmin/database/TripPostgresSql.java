@@ -1,6 +1,7 @@
 package com.database.dbadmin.database;
 
 import com.database.dbadmin.dao.GroupDao;
+import com.database.dbadmin.dao.TripDao;
 import com.database.dbadmin.models.*;
 
 import java.sql.*;
@@ -180,6 +181,36 @@ public class TripPostgresSql {
         String query = "DELETE FROM trip where group_id=?";
         try (PreparedStatement preparedStatement = connect.connection.prepareStatement(query)) {
             preparedStatement.setLong(1, groupId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public Trip getTrip(String routeName){
+        String query = "SELECT * FROM trip INNER JOIN route r ON r.route_id = trip.route_id AND r.route_name=?";
+        Trip trip = null;
+        try(PreparedStatement preparedStatement = connect.connection.prepareStatement(query)) {
+            preparedStatement.setString(1, routeName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                trip = new Trip();
+                trip.setId(resultSet.getLong("trip_id"));
+                trip.setPenalty(resultSet.getDouble("penalty"));
+                trip.setArrivalDate(resultSet.getDate("arrival_date"));
+                trip.setDepartureDate(resultSet.getDate("departure_date"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return trip;
+    }
+
+    public void updatePenalty(Trip trip) {
+        String query = "UPDATE trip SET penalty=? WHERE trip_id=?";
+        try(PreparedStatement preparedStatement = connect.connection.prepareStatement(query)) {
+            preparedStatement.setDouble(1, trip.getPenalty());
+            preparedStatement.setLong(2, trip.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

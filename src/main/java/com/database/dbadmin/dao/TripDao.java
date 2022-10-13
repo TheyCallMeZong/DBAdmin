@@ -2,7 +2,9 @@ package com.database.dbadmin.dao;
 
 import com.database.dbadmin.database.TripPostgresSql;
 import com.database.dbadmin.models.*;
+import javafx.beans.Observable;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Set;
 
@@ -31,5 +33,16 @@ public class TripDao {
 
     public void deleteTrip(Long groupId) {
         tripPostgresSql.deleteTrip(groupId);
+    }
+
+    public Trip getTrip(String value) {
+        return tripPostgresSql.getTrip(value);
+    }
+
+    public void updatePenalty(String x, Long id) {
+        Trip trip = new Trip();
+        trip.setPenalty(Double.parseDouble(x));
+        trip.setId(id);
+        tripPostgresSql.updatePenalty(trip);
     }
 }

@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -40,5 +41,6 @@
       </TableView>
       <Button fx:id="clients" layoutX="180.0" layoutY="89.0" mnemonicParsing="false" onAction="#viewClients" prefHeight="26.0" prefWidth="117.0" text="Viewing clients" />
       <Label fx:id="employee" layoutX="320.0" layoutY="94.0" />
+      <TextField fx:id="penalty" layoutX="526.0" layoutY="89.0" promptText="penalty" />
    </children>
 </AnchorPane>

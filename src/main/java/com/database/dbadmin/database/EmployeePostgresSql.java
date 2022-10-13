@@ -97,7 +97,7 @@ public class EmployeePostgresSql {
     }
 
     public void updateEmployee(Employee employee, boolean flag){
-        String query = "UPDATE employee SET login=?, password=?, name=?, email=?, \"phoneNumber\"=?, age=? WHERE ID=?";
+        String query = "UPDATE employee SET login=?, password=?, name=?, email=?, \"phoneNumber\"=?, age=? WHERE employee_id=?";
         try(PreparedStatement preparedStatement = postgresSqlConnect.connection.prepareStatement(query)){
             String password;
             if (flag){

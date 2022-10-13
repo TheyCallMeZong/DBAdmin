@@ -80,4 +80,17 @@ public class ClientDao {
     public void deleteClient(Client client) {
         clientPostgresSql.deleteClient(client.getId());
     }
+
+    public boolean updateClient(String fullName,
+                             String seriesAndNumberOfPassport,
+                             String issued,
+                             LocalDate birth, LocalDate dateOfIssue, Long id) {
+        Client client = createClient(fullName, issued, seriesAndNumberOfPassport, birth, dateOfIssue);
+        if (client == null){
+            return false;
+        }
+        client.setId(id);
+        clientPostgresSql.updateClient(client);
+        return true;
+    }
 }

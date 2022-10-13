@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class ClientsInRouteController {
-    private Client client;
+    public static Client client;
     private Main main;
     @FXML
     public TableView<Client> table;
@@ -61,7 +61,7 @@ public class ClientsInRouteController {
         table.setItems(clients);
         main = new Main();
         addDeleteButtonToTable();
-        //addEditButtonToTable();
+        addEditButtonToTable();
 
     }
 
@@ -119,7 +119,7 @@ public class ClientsInRouteController {
                         btn.setOnAction((ActionEvent event) -> {
                             client = getTableView().getItems().get(getIndex());
                             try {
-                                main.openStage("edit.fxml", 350, 344);
+                                main.openStage("clientEdit.fxml", 447, 400);
                             } catch (IOException e) {
                                 System.err.println("err");
                             }
@@ -142,5 +142,11 @@ public class ClientsInRouteController {
         edit.setMaxWidth(70);
         edit.setMinWidth(70);
         edit.setCellFactory(cellFactory);
+    }
+
+    public void updateClients(ActionEvent actionEvent) {
+        clients.clear();
+        clients.addAll(clientDao.getAllClientsFromRoute(route));
+        table.setItems(clients);
     }
 }

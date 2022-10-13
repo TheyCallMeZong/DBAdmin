@@ -3,6 +3,7 @@ package com.database.dbadmin.database;
 import com.database.dbadmin.dao.TripDao;
 import com.database.dbadmin.models.Client;
 import java.lang.reflect.Field;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -52,7 +53,8 @@ public class ClientPostgresSql {
     }
 
     public List<Client> getAllClientsFromRoute(String route) {
-        String query = "SELECT name, surname, passport_series, passport_number, c.client_id FROM trip INNER JOIN client_group cg on trip.group_id = cg.group_id INNER JOIN \"group\" g on g.group_id = cg.group_id INNER JOIN clients c on c.client_id = cg.client_id\n" +
+        String query = "SELECT name, surname, passport_series, passport_number, c.client_id, patronymic, birth, passport_issued, date_issue" +
+                " FROM trip INNER JOIN client_group cg on trip.group_id = cg.group_id INNER JOIN \"group\" g on g.group_id = cg.group_id INNER JOIN clients c on c.client_id = cg.client_id\n" +
                 "    INNER JOIN route r on r.route_id = trip.route_id WHERE r.route_name=?";
         List<Client> clients = new ArrayList<>();
         try(PreparedStatement preparedStatement = clientPostgresSql.connection.prepareStatement(query)) {
@@ -65,6 +67,10 @@ public class ClientPostgresSql {
                 client.setSurname(resultSet.getString("surname"));
                 client.setPassportSeries(resultSet.getString("passport_series"));
                 client.setPassportNumber(resultSet.getString("passport_number"));
+                client.setPatronymic(resultSet.getString("patronymic"));
+                client.setBirth(resultSet.getDate("birth"));
+                client.setDateOfIssue(resultSet.getDate("date_issue"));
+                client.setPassportIssued(resultSet.getString("passport_issued"));
                 clients.add(client);
             }
             return clients;
@@ -125,6 +131,26 @@ public class ClientPostgresSql {
                 TripDao tripDao = new TripDao();
                 tripDao.deleteTrip(groupId);
             }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void updateClient(Client client) {
+        String query = "UPDATE clients SET name=?, surname=?, patronymic=?, passport_number=?, passport_series=?, passport_issued=?,\n" +
+                "                   date_issue=?, birth=? WHERE client_id=?";
+
+        try (PreparedStatement preparedStatement = clientPostgresSql.connection.prepareStatement(query)){
+            preparedStatement.setString(1, client.getName());
+            preparedStatement.setString(2, client.getSurname());
+            preparedStatement.setString(3, client.getPatronymic());
+            preparedStatement.setString(4, client.getPassportNumber());
+            preparedStatement.setString(5, client.getPassportSeries());
+            preparedStatement.setString(6, client.getPassportIssued());
+            preparedStatement.setDate(7, (Date) client.getDateOfIssue());
+            preparedStatement.setDate(8, (Date) client.getBirth());
+            preparedStatement.setLong(9, client.getId());
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

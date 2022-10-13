@@ -11,7 +11,7 @@
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="90.0" style="-fx-background-color: #191970;">
          <children>
-            <Button layoutX="9.0" layoutY="14.0" mnemonicParsing="false" onAction="#travelButton" prefHeight="54.0" prefWidth="54.0">
+            <Button layoutX="10.0" layoutY="38.0" mnemonicParsing="false" onAction="#travelButton" prefHeight="54.0" prefWidth="54.0">
                <graphic>
                   <ImageView fitHeight="54.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -19,12 +19,12 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Text layoutX="22.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #b0c8e2#b0c8e2;" text="Travel">
+            <Text layoutX="23.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #b0c8e2#b0c8e2;" text="Travel">
                <font>
                   <Font name="Toppan Bunkyu Mincho Regular" size="16.0" />
                </font>
             </Text>
-            <Button layoutX="10.0" layoutY="110.0" mnemonicParsing="false" onAction="#openAvailableTrips" prefHeight="54.0" prefWidth="54.0">
+            <Button layoutX="9.0" layoutY="170.0" mnemonicParsing="false" onAction="#openAvailableTrips" prefHeight="54.0" prefWidth="54.0">
                <graphic>
                   <ImageView fitHeight="54.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -33,35 +33,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Text layoutX="8.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #b0c8e2#b0c8e2;" text="Available trips" />
-            <Button layoutX="10.0" layoutY="208.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="54.0">
-               <graphic>
-                  <ImageView fitHeight="55.0" fitWidth="55.0">
-                     <image>
-                        <Image url="@img/free-icon-travel-3125914.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button layoutX="10.0" layoutY="310.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="54.0">
-               <graphic>
-                  <ImageView fitHeight="54.0" fitWidth="54.0">
-                     <image>
-                        <Image url="@img/free-icon-customer-service-4814842.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Text layoutX="13.0" layoutY="289.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #b0c8e2#b0c8e2;" text="Create new trip">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
-            <Text layoutX="20.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #b0c8e2#b0c8e2;" text="Exist client">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Text>
+            <Text layoutX="7.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #b0c8e2#b0c8e2;" text="Available trips" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="74.0" fitWidth="74.0" layoutX="615.0" layoutY="11.0">
